@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>推しのツアーに帯同する件｜スマホ風SNSファンゲーム</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--ink:#0b0b0f;--sub:#8e8e93;--bg:#f2f2f7;--red:#ff3b30;--line:#e4e4ea;--green:#06c755;--wish:#7b61c9;--wish2:#4fc3e8}
+html,body{height:100%}
+body{font-family:-apple-system,"SF Pro Text","Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:radial-gradient(1100px 700px at 15% 0%,#2c2742 0%,#14121f 55%,#07060c 100%);color:#fff;display:flex;flex-direction:column;align-items:center;min-height:100dvh}
+.page-head{padding:15px 16px 7px;text-align:center;max-width:580px}
+.page-head h1{font-size:19px;letter-spacing:.05em}
+.page-head p{font-size:11.5px;color:#c7c0da;margin-top:5px;line-height:1.65}
+.page-head .src{font-size:10.5px;color:#8d84a3;margin-top:4px;line-height:1.6}
+.phone{position:relative;width:min(402px,100vw);height:min(852px,calc(100dvh - 112px));background:#000;border-radius:54px;padding:11px;flex:none;box-shadow:0 0 0 2px #4a4d52,0 0 0 5px #17181c,0 30px 70px rgba(0,0,0,.7);margin-bottom:12px}
+.phone::before{content:'';position:absolute;left:-2.5px;top:200px;width:3px;height:90px;background:#3a3d42;border-radius:2px}
+.phone::after{content:'';position:absolute;right:-2.5px;top:230px;width:3px;height:124px;background:#3a3d42;border-radius:2px}
+@media(max-width:430px){.phone{border-radius:0;padding:0;height:calc(100dvh - 92px);box-shadow:none}.phone::before,.phone::after{display:none}.page-head{padding:9px 12px 3px}.page-head .src{display:none}}
+.screen{position:relative;width:100%;height:100%;border-radius:43px;overflow:hidden;background:#000}
+@media(max-width:430px){.screen{border-radius:0}}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:30px;background:#000;border-radius:20px;z-index:212;display:flex;align-items:center;justify-content:flex-end;padding-right:9px}
+.island::after{content:'';width:9px;height:9px;border-radius:50%;background:#14202e;box-shadow:inset 0 0 2px 1px #24405c}
+@media(max-width:430px){.island{display:none}}
+.statusbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:208;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 34px;font-size:15px;font-weight:600;color:#fff;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.statusbar.dark{color:#111;text-shadow:none}
+.sb-r{display:flex;align-items:center;gap:6px}
+.homebar{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(255,255,255,.92);z-index:220;cursor:pointer;box-shadow:0 0 3px rgba(0,0,0,.35)}
+.view{position:absolute;inset:0;display:none;flex-direction:column;background:#fff;color:var(--ink);animation:vin .22s ease}
+.view.on{display:flex}
+@keyframes vin{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+img{user-select:none;-webkit-user-drag:none}
+/* lock */
+#v-lock{background:#000;color:#fff;z-index:110;cursor:pointer;overflow:hidden}
+#v-lock .wallbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
+#v-lock .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 32%,rgba(0,0,0,0) 60%,rgba(0,0,0,.42))}
+.lock-top{position:relative;margin-top:58px;text-align:center;font-size:17px;font-weight:500}
+.lock-clock{position:relative;text-align:center;margin-top:2px}
+.lock-date{font-size:16px;font-weight:500}
+.lock-time{font-size:80px;font-weight:200;line-height:1.06;font-family:-apple-system,"SF Pro Display",sans-serif;letter-spacing:.01em}
+.lock-notifs{position:relative;margin:22px 10px 0;display:flex;flex-direction:column;gap:8px}
+.lnotif{background:rgba(40,40,48,.58);backdrop-filter:blur(16px);border-radius:22px;padding:10px 13px;display:flex;gap:9px;align-items:flex-start;text-align:left;width:100%;color:#fff}
+.lnotif img{width:36px;height:36px;border-radius:9px;object-fit:cover;flex:none}
+.ln-ic{width:36px;height:36px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+.ln-h{display:flex;justify-content:space-between;font-size:11px;color:#d9d9de;text-transform:uppercase;letter-spacing:.04em}
+.ln-h span{color:#aeaeb6;text-transform:none}
+.ln-t{font-size:13.5px;line-height:1.45;margin-top:1px}
+.lock-btns{position:relative;margin-top:auto;padding:0 48px 4px;display:flex;justify-content:space-between}
+.lk-btn{width:48px;height:48px;border-radius:50%;background:rgba(28,28,34,.55);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:19px}
+.lock-hint{position:relative;text-align:center;font-size:12.5px;color:rgba(255,255,255,.9);padding:11px 0 30px}
+/* home */
+#v-home{background:#000;color:#fff;overflow:hidden}
+#v-home .wallbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+#v-home .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,24,.35),rgba(10,8,24,.12) 45%,rgba(10,8,24,.5))}
+.home-scroll{flex:1;overflow-y:auto;padding:58px 0 116px;position:relative;z-index:1;scrollbar-width:none}
+.home-scroll::-webkit-scrollbar{display:none}
+.wid-row{display:flex;gap:12px;padding:2px 20px 0}
+.wid{flex:1;border-radius:22px;padding:12px 14px;box-shadow:0 4px 16px rgba(0,0,0,.3);min-height:108px}
+.wid-count{background:rgba(18,16,34,.82);backdrop-filter:blur(10px);color:#fff}
+.wid-count .k{font-size:11px;color:#bdb2e8;font-weight:700;letter-spacing:.06em}
+.wid-count .big{font-size:31px;font-weight:700;line-height:1.15;margin-top:2px}
+.wid-count .big b{color:#ffd76a;font-weight:800}
+.wid-count .s{font-size:11px;color:#ddd7f2;line-height:1.5}
+.wid-photo{position:relative;overflow:hidden;padding:0}
+.wid-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wid-photo span{position:absolute;left:11px;bottom:9px;font-size:11px;font-weight:700;text-shadow:0 1px 5px rgba(0,0,0,.7);z-index:1}
+.wid-wide{margin:12px 20px 0;background:rgba(255,255,255,.95);color:#111;border-radius:22px;padding:12px 15px;box-shadow:0 4px 16px rgba(0,0,0,.3);font-size:12.5px;line-height:1.6}
+.wid-wide b{font-size:13px}
+.gbar{height:6px;background:#e6e6ec;border-radius:3px;margin:3px 0 6px;overflow:hidden}
+.gbar i{display:block;height:100%;border-radius:3px;transition:width .6s cubic-bezier(.2,.8,.3,1)}
+.grow{display:flex;justify-content:space-between;font-size:11px;color:#555}
+.apps{margin-top:17px;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:19px 10px}
+.app{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:#fff;position:relative;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.app .ic{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 3px 9px rgba(0,0,0,.32);overflow:hidden;position:relative}
+.app .ic img{width:100%;height:100%;object-fit:cover}
+.app .bdg{position:absolute;top:-5px;right:4px;background:var(--red);color:#fff;font-size:11.5px;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px;z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.ic-line{background:var(--green)}
+.ic-ig{background:linear-gradient(45deg,#feda75,#fa7e1e 32%,#d62976 62%,#962fbf 85%,#4f5bd5)}
+.ic-tt{background:#000;color:#fff}
+.ic-cal{background:#fff;flex-direction:column}
+.ic-cal .cwd{color:var(--red);font-size:10px;font-weight:700;line-height:1;margin-top:3px}
+.ic-cal .cd2{color:#111;font-size:26px;font-weight:300;line-height:1.05}
+.ic-note{background:#fff;flex-direction:column;justify-content:flex-start}
+.ic-note .nb{width:100%;height:16px;background:#f8d74e;flex:none}
+.ic-note .nl{width:68%;height:3px;background:#dbdbe0;border-radius:2px;margin-top:7px}
+.ic-photo{background:linear-gradient(135deg,#f7f7fa,#dcdce4)}
+.ic-tel{background:linear-gradient(180deg,#67e06a,#29c73a)}
+.ic-set{background:linear-gradient(180deg,#e9e9ed,#b9b9c0);color:#555}
+.dock{position:absolute;left:11px;right:11px;bottom:9px;height:88px;background:rgba(232,232,240,.32);backdrop-filter:blur(22px) saturate(1.6);border-radius:28px;display:flex;align-items:center;justify-content:space-around;padding:0 12px;z-index:3}
+.dock .app{text-shadow:none}
+/* headers */
+.ahead{padding:54px 12px 8px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);background:#fff;z-index:6;flex:none}
+.ahead .back{font-size:25px;padding:0 6px;color:#222;line-height:1}
+.ahead h2{font-size:16.5px;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ahead .sub{font-size:10.5px;color:var(--sub);font-weight:400}
+.ahead .hic{font-size:19px;padding:2px 4px}
+.abody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.abody::-webkit-scrollbar{display:none}
+/* LINE list */
+.ll-head{padding:56px 16px 4px;display:flex;align-items:center;justify-content:space-between;background:#fff;z-index:6;flex:none}
+.ll-head h2{font-size:21px;font-weight:800}
+.ll-icons{display:flex;gap:16px;font-size:18px;align-items:center}
+.me-row{display:flex;gap:11px;padding:10px 16px;align-items:center;width:100%;text-align:left}
+.me-row .nm{font-size:14.5px;font-weight:600}
+.me-row .st{font-size:11.5px;color:var(--sub);margin-top:1px}
+.av{border-radius:50%;object-fit:cover;flex:none;background:#ddd}
+.avsq{border-radius:38%;object-fit:cover;flex:none;background:#ddd}
+.sil{border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.sec-t{padding:10px 16px 3px;font-size:11.5px;color:#999;font-weight:600}
+.thread{display:flex;gap:11px;padding:9px 16px;align-items:center;width:100%;text-align:left}
+.thread:active{background:#f2f2f5}
+.thread .tt{flex:1;min-width:0}
+.thread .tn{font-size:14.5px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}
+.thread .tn time{font-size:10.5px;color:var(--sub);font-weight:400;flex:none;margin-left:8px}
+.thread .tp{font-size:12.5px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.thread .ub{background:var(--red);color:#fff;font-size:11px;font-weight:700;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex:none}
+.thread .done{font-size:11px;color:var(--wish);font-weight:700;flex:none}
+.ll-tabs{flex:none;display:flex;border-top:1px solid var(--line);background:rgba(250,250,252,.96);padding:7px 6px 20px}
+.ll-tabs button{flex:1;font-size:19px;color:#111;display:flex;flex-direction:column;align-items:center;gap:1px}
+.ll-tabs button span{font-size:9px;color:#666}
+.locknote{padding:13px 16px;font-size:12px;color:var(--sub);text-align:center;line-height:1.6}
+/* LINE chat */
+#v-chat{background:#8fa9c8}
+.chat-head{padding:52px 8px 7px;display:flex;align-items:center;gap:2px;background:rgba(143,169,200,.96);z-index:6;flex:none;color:#12233c}
+.chat-head .back{font-size:25px;padding:0 5px}
+.chat-head h2{font-size:15.5px;font-weight:700;flex:1}
+.chat-head .hic{font-size:17px;padding:2px 5px}
+.chat-body{flex:1;overflow-y:auto;padding:10px 10px 14px;scrollbar-width:none}
+.chat-body::-webkit-scrollbar{display:none}
+.day-pill{display:flex;justify-content:center;margin:8px 0 12px}
+.day-pill span{background:rgba(0,0,0,.18);color:#fff;font-size:11px;padding:4px 12px;border-radius:11px}
+.msg{display:flex;gap:7px;margin:3px 0;align-items:flex-start;animation:msgin .18s ease}
+@keyframes msgin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.msg img.av{width:38px;height:38px}
+.msg .col{max-width:74%}
+.msg .who{font-size:11px;color:#233a55;margin:0 0 3px 2px;font-weight:600}
+.bub{background:#fff;border-radius:16px;border-top-left-radius:4px;padding:8px 11px;font-size:14px;line-height:1.55;color:#111;box-shadow:0 1px 1px rgba(0,0,0,.06);white-space:pre-wrap;word-break:break-word}
+.msg .tm{font-size:9.5px;color:#33475e;align-self:flex-end;padding-bottom:2px;white-space:nowrap}
+.msg.me{flex-direction:row-reverse}
+.msg.me .bub{background:#a8e063;background:linear-gradient(180deg,#b5e48c,#9ede6a);border-radius:16px;border-top-right-radius:4px}
+.msg.me .rd{font-size:9.5px;color:#ffe45e;color:#f5d90a;font-weight:700;display:block;text-align:right}
+.msg.me .tm{text-align:right}
+.bub.imgb{padding:4px;background:#fff}
+.bub.imgb img{width:210px;max-width:60vw;border-radius:12px;display:block}
+.sys-line{text-align:center;font-size:11px;color:#2c4258;background:rgba(255,255,255,.35);border-radius:9px;padding:5px 10px;margin:9px auto;max-width:88%;line-height:1.5}
+.typing{display:inline-flex;gap:4px;background:#fff;border-radius:16px;border-top-left-radius:4px;padding:11px 13px}
+.typing i{width:6px;height:6px;border-radius:50%;background:#b9b9c0;animation:tp 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-3px);opacity:1}}
+.chat-foot{flex:none;background:#f7f7f9;border-top:1px solid #ddd;padding:8px 10px 24px;display:flex;gap:8px;align-items:center}
+.chat-foot .plus{font-size:23px;color:#555}
+.chat-in{flex:1;background:#fff;border:1px solid #e2e2e8;border-radius:19px;padding:8px 13px;font-size:16px;color:#999}
+.send-b{background:var(--green);color:#fff;font-weight:700;font-size:13px;border-radius:16px;padding:8px 13px}
+.panel{flex:none;background:#fff;border-top:1px solid var(--line);padding:12px 14px 26px;animation:msgin .2s ease;max-height:46%;overflow-y:auto}
+.panel .pt{font-size:12px;color:var(--sub);font-weight:700;margin-bottom:8px;letter-spacing:.03em}
+.choice{display:block;width:100%;text-align:left;background:#f2f7ee;border:1.5px solid #bfe3a8;color:#1d3a12;font-size:14px;line-height:1.5;border-radius:14px;padding:10px 13px;margin:7px 0;font-weight:600}
+.choice:active{background:#dff2cd}
+.miss{display:flex;gap:9px;align-items:flex-start;width:100%;text-align:left;background:#f6f4fd;border:1.5px solid #ddd3f5;border-radius:14px;padding:10px 12px;margin:7px 0;font-size:13.5px;line-height:1.5}
+.miss .box{width:21px;height:21px;border-radius:6px;border:2px solid #a68fe0;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;margin-top:1px}
+.miss.sel{background:#ece5fd}
+.miss.sel .box{background:var(--wish);border-color:var(--wish)}
+.miss small{display:block;color:#777;font-size:11.5px;margin-top:2px}
+.bigbtn{display:block;width:100%;background:var(--wish);color:#fff;font-weight:800;font-size:15px;border-radius:15px;padding:13px;margin-top:10px;box-shadow:0 4px 12px rgba(123,97,201,.35)}
+.bigbtn:disabled{background:#c9c2e4;box-shadow:none}
+.next-hint{text-align:center;font-size:11.5px;color:#33506e;padding:7px 0 2px;animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:.55}50%{opacity:1}}
+/* IG */
+.ig-head{padding:54px 14px 6px;display:flex;align-items:center;gap:10px;background:#fff;z-index:6;flex:none;border-bottom:1px solid #f0f0f3}
+.ig-logo{font-family:Georgia,serif;font-style:italic;font-size:22px;font-weight:600;flex:1}
+.ig-head .hic{font-size:20px;position:relative}
+.stories{display:flex;gap:15px;padding:10px 14px 8px;overflow-x:auto;flex:none;scrollbar-width:none;background:#fff}
+.stories::-webkit-scrollbar{display:none}
+.story{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:#333;flex:none}
+.story .ring{width:62px;height:62px;border-radius:50%;padding:3px;background:conic-gradient(from 210deg,#feda75,#fa7e1e,#d62976,#962fbf,#feda75)}
+.story .ring.seen{background:#d8d8de}
+.story .ring img{width:100%;height:100%;border-radius:50%;border:2.5px solid #fff;object-fit:cover;display:block}
+.ig-prof{padding:6px 16px 0;background:#fff}
+.ig-top{display:flex;align-items:center;gap:22px}
+.ig-top .ring{width:84px;height:84px;border-radius:50%;padding:3.5px;background:conic-gradient(from 210deg,#feda75,#fa7e1e,#d62976,#962fbf,#feda75);flex:none}
+.ig-top .ring img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;object-fit:cover;display:block}
+.ig-stats{flex:1;display:flex;justify-content:space-around;text-align:center}
+.ig-stats b{font-size:16.5px;display:block}
+.ig-stats span{font-size:12px;color:#333}
+.ig-bio{font-size:13px;line-height:1.55;margin-top:9px}
+.ig-bio b{font-size:13.5px}
+.ig-bio .lnk{color:#00376b;font-weight:600}
+.ig-btns{display:flex;gap:6px;margin:11px 0 4px}
+.ig-btns button{flex:1;background:#efefef;border-radius:9px;padding:7px 0;font-size:13px;font-weight:600}
+.ig-btns .fol{background:#0095f6;color:#fff}
+.ig-tabs{display:flex;border-top:1px solid var(--line);margin-top:8px;background:#fff}
+.ig-tabs button{flex:1;padding:8px 0;font-size:17px;color:#8e8e93;border-bottom:1.5px solid transparent}
+.ig-tabs button.on{color:#111;border-bottom-color:#111}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#fff}
+.ig-grid button{padding:0;position:relative;aspect-ratio:1;overflow:hidden;background:#eee}
+.ig-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.ig-grid .pin{position:absolute;top:5px;right:6px;font-size:12px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.ig-lock{grid-column:1/-1;text-align:center;font-size:12px;color:var(--sub);padding:20px 10px;line-height:1.7}
+.post{border-bottom:1px solid #f0f0f3;padding-bottom:10px;background:#fff;animation:vin .2s ease}
+.post-h{display:flex;align-items:center;gap:9px;padding:9px 12px}
+.post-h .ring{width:34px;height:34px;border-radius:50%;padding:2px;background:conic-gradient(from 210deg,#feda75,#d62976,#962fbf,#feda75);flex:none}
+.post-h .ring img{width:100%;height:100%;border-radius:50%;border:2px solid #fff;object-fit:cover;display:block}
+.post-h b{font-size:13.5px}
+.post-h .loc{font-size:11px;color:#555}
+.post-h .dots{margin-left:auto;color:#333;font-size:15px}
+.post-img{position:relative}
+.post-img img{width:100%;aspect-ratio:1.15;object-fit:cover;display:block}
+.big-heart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;color:#fff;opacity:0;pointer-events:none;text-shadow:0 4px 24px rgba(0,0,0,.35)}
+.big-heart.pop{animation:heartpop .7s ease}
+@keyframes heartpop{0%{opacity:0;transform:scale(.4)}25%{opacity:1;transform:scale(1.12)}55%{opacity:1;transform:scale(.96)}100%{opacity:0;transform:scale(1.05) translateY(-8px)}}
+.post-act{display:flex;gap:15px;padding:9px 12px 3px;font-size:23px;align-items:center}
+.post-act .hrt.liked{color:#ff3040;animation:hb .3s ease}
+@keyframes hb{50%{transform:scale(1.3)}}
+.post-act .save{margin-left:auto}
+.post-likes{padding:2px 12px;font-size:13.5px;font-weight:700}
+.post-cap{padding:2px 12px;font-size:13.5px;line-height:1.55}
+.post-cap b{margin-right:5px}
+.post-cmt{padding:2px 12px;font-size:13px;color:#555;line-height:1.6}
+.post-cmt b{color:#111}
+.post-time{padding:3px 12px;font-size:10.5px;color:var(--sub);letter-spacing:.02em}
+/* TikTok */
+#v-tt{background:#000;color:#fff}
+.tt-feed{flex:1;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+.tt-feed::-webkit-scrollbar{display:none}
+.tt-item{position:relative;height:100%;min-height:100%;scroll-snap-align:start;overflow:hidden}
+.tt-item>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.tt-item .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.32),transparent 26%,transparent 55%,rgba(0,0,0,.66))}
+.tt-top{position:absolute;top:52px;left:0;right:0;display:flex;justify-content:center;gap:20px;font-size:15.5px;font-weight:600;z-index:3;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.tt-top .on{border-bottom:2.5px solid #fff;padding-bottom:3px}
+.tt-top .srch{position:absolute;right:14px;font-size:19px}
+.tt-rail{position:absolute;right:9px;bottom:96px;display:flex;flex-direction:column;gap:17px;align-items:center;z-index:3}
+.tt-rail .rb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.tt-rail .rb .ric{font-size:29px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.tt-rail .rb .ric.liked{color:#fe2c55;animation:hb .3s ease}
+.tt-rail .tav{width:47px;height:47px;border-radius:50%;border:2px solid #fff;object-fit:cover}
+.tt-rail .plus{width:19px;height:19px;border-radius:50%;background:#fe2c55;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:-11px;font-weight:800}
+.tt-disc{width:42px;height:42px;border-radius:50%;background:conic-gradient(#333 0 25%,#111 0 50%,#333 0 75%,#111 0);display:flex;align-items:center;justify-content:center;animation:spin 5s linear infinite;margin-top:2px}
+.tt-disc img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tt-info{position:absolute;left:11px;right:76px;bottom:78px;z-index:3}
+.tt-info .at{font-size:16.5px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.tt-info .cap{font-size:13px;line-height:1.5;margin-top:5px;text-shadow:0 1px 3px rgba(0,0,0,.55)}
+.tt-info .hash{font-weight:700}
+.tt-music{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:12.5px;max-width:230px}
+.marq{overflow:hidden;white-space:nowrap;flex:1;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq span{display:inline-block;animation:marq 7s linear infinite}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:74px;color:rgba(255,255,255,.92);opacity:0;pointer-events:none;z-index:2;text-shadow:0 4px 22px rgba(0,0,0,.4)}
+.tt-play.show{opacity:1;transition:opacity .15s}
+.tt-prog{position:absolute;left:0;right:0;bottom:64px;height:2.5px;background:rgba(255,255,255,.28);z-index:3}
+.tt-prog i{display:block;height:100%;background:#fe2c55;width:0}
+.tt-tabs{flex:none;display:flex;background:#000;padding:6px 4px 20px;border-top:1px solid rgba(255,255,255,.09);z-index:4}
+.tt-tabs button{flex:1;color:#b9b9be;font-size:19px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.tt-tabs button span{font-size:9px}
+.tt-tabs button.on{color:#fff}
+.tt-tabs .mk{font-size:25px;line-height:.9}
+/* calendar */
+.cal-wrap{padding:8px 14px 20px}
+.cal-m{font-size:16px;font-weight:800;margin:14px 2px 8px;display:flex;justify-content:space-between;align-items:baseline}
+.cal-m span{font-size:11px;color:var(--sub);font-weight:500}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-grid .dw{text-align:center;font-size:10.5px;color:#999;padding:3px 0;font-weight:600}
+.cal-grid .dw:first-child{color:#ff6b62}.cal-grid .dw:last-child{color:#5b8def}
+.cd{aspect-ratio:.86;border-radius:9px;background:#f6f6f9;font-size:12px;padding:4px 3px;position:relative;color:#333;overflow:hidden}
+.cd.dim{background:transparent;color:#c6c6cc}
+.cd.today{background:#111;color:#fff;font-weight:800}
+.cd .ev{font-size:8px;line-height:1.3;border-radius:3px;padding:1px 2px;margin-top:2px;color:#fff;font-weight:700;display:block}
+.ev-p{background:var(--wish)}.ev-r{background:#ff9500}.ev-b{background:#0a84ff}.ev-g{background:#34c759}
+.cal-legend{font-size:11px;color:#666;line-height:1.9;margin-top:10px}
+.cal-item{display:flex;gap:10px;padding:10px 2px;border-bottom:1px solid #f0f0f3;font-size:13px;line-height:1.55}
+.cal-item .dt{flex:none;width:44px;text-align:center}
+.cal-item .dt b{font-size:17px;display:block}
+.cal-item .dt span{font-size:10px;color:var(--sub)}
+/* notes */
+.note-item{margin:11px 14px;background:#fffef4;border:1px solid #f0e6bd;border-radius:13px;padding:12px 14px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.note-item .nt{font-size:13.5px;font-weight:800;display:flex;justify-content:space-between}
+.note-item .nt span{font-size:10.5px;color:#a4934f;font-weight:600}
+.note-item p{font-size:13px;line-height:1.7;color:#3d3823;margin-top:5px;white-space:pre-wrap}
+.note-lock{margin:11px 14px;background:#f4f4f7;border-radius:13px;padding:12px 14px;font-size:12.5px;color:#999;line-height:1.6}
+.end-coll{margin:14px}
+.end-card{border-radius:15px;padding:14px;color:#fff;margin-bottom:10px;line-height:1.65;font-size:13px}
+.end-card b{font-size:14.5px;display:block;margin-bottom:3px}
+.end-card.lock{background:#e9e9ee;color:#a5a5ad}
+/* photos */
+.ph-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ph-grid button{padding:0;aspect-ratio:1;overflow:hidden;background:#e9e9ee;position:relative}
+.ph-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-grid .lk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:21px;color:#a9a9b2;background:#e9e9ee}
+#v-photoview{background:#000;color:#fff}
+#v-photoview img{width:100%;flex:1;object-fit:contain;min-height:0}
+.pv-cap{padding:12px 16px 30px;font-size:13px;line-height:1.6}
+/* call */
+#v-call{background:linear-gradient(170deg,#232038,#0d0b18);color:#fff;align-items:center;text-align:center;z-index:105}
+#v-call .cav{width:104px;height:104px;border-radius:50%;object-fit:cover;margin-top:110px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#v-call .cnm{font-size:27px;font-weight:700;margin-top:15px}
+#v-call .cst{font-size:14px;color:#bdb8d4;margin-top:5px;min-height:20px}
+#v-call .csub{margin:20px 34px 0;font-size:14.5px;line-height:1.75;color:#eceaf6;min-height:78px}
+.call-grid{display:grid;grid-template-columns:repeat(3,64px);gap:15px 22px;margin-top:8px}
+.call-grid .cb{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#d8d4e8}
+.call-grid .cb i{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:22px;font-style:normal}
+.call-btns{margin-top:auto;padding:0 62px 52px;display:flex;justify-content:space-between;width:100%}
+.cbtn{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px}
+.cbtn i{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;font-style:normal;color:#fff}
+.cbtn .dec{background:#ff3b30}.cbtn .acc{background:#34c759;animation:ring 1s infinite}
+@keyframes ring{0%,100%{transform:rotate(0)}25%{transform:rotate(12deg)}75%{transform:rotate(-12deg)}}
+.call-end{margin-top:auto;padding-bottom:52px}
+.call-end i{width:66px;height:66px;border-radius:50%;background:#ff3b30;display:flex;align-items:center;justify-content:center;font-size:27px;color:#fff;font-style:normal;transform:rotate(135deg)}
+/* ending */
+#v-ending{z-index:108;color:#fff;align-items:center;text-align:center;overflow:hidden}
+#v-ending .wallbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#v-ending .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,6,20,.52),rgba(8,6,20,.78))}
+#v-ending .ec{position:relative;padding:96px 30px 40px;display:flex;flex-direction:column;align-items:center;height:100%}
+#v-ending .ek{font-size:11.5px;letter-spacing:.28em;color:#ffd76a;font-weight:800}
+#v-ending h3{font-size:25px;margin-top:12px;line-height:1.45}
+#v-ending .et{font-size:13.5px;line-height:1.95;margin-top:16px;color:#f0eef8;white-space:pre-wrap}
+#v-ending .gs{margin-top:18px;background:rgba(255,255,255,.13);backdrop-filter:blur(8px);border-radius:15px;padding:11px 18px;font-size:12.5px;line-height:1.9;width:100%}
+.fin{margin-top:auto;font-family:Georgia,serif;font-style:italic;font-size:19px;color:#ffd76a}
+/* free chat */
+.free-in{flex:1;background:#fff;border:1px solid #e2e2e8;border-radius:19px;padding:8px 13px;font-size:16px;color:#111;outline:none;width:100%}
+/* toast */
+.toast{position:absolute;left:50%;bottom:118px;transform:translateX(-50%) translateY(16px);background:rgba(20,20,26,.92);color:#fff;font-size:12.5px;padding:9px 16px;border-radius:19px;z-index:300;opacity:0;pointer-events:none;transition:.25s;max-width:86%;text-align:center;line-height:1.5}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #f0f0f3;font-size:14px;width:100%;text-align:left;background:#fff}
+.set-row span{color:var(--sub);font-size:12px}
+</style>
+</head>
+<body>
+<div class="page-head">
+<h1>⭐ 推しのツアーに帯同する件</h1>
+<p>NCT WISH 2ndツアー『INTO THE WISH : Face Our WISH』日本公演に、通訳兼アーティストサポートスタッフとして帯同するスマホ風SNSファンゲーム。</p>
+<p class="src">※これは実在の人物を題材にした創作フィクション（ファンメイド作品）です。実在の公演内容・発言とは関係ありません。日程・会場・リリース実績等の史実データは公開情報に基づきます。セットリスト等の未公表部分は創作です。</p>
+</div>
+<div class="phone"><div class="screen">
+<div class="island"></div>
+<div class="statusbar" id="statusbar"><span id="sb-time">9:41</span><span class="sb-r"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="16" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 9.6a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM8 5.4c1.7 0 3.3.66 4.5 1.86l-1.7 1.7A3.9 3.9 0 0 0 8 8.1c-1.06 0-2.05.3-2.8.86l-1.7-1.7A6.3 6.3 0 0 1 8 5.4zM8 1c2.9 0 5.7 1.14 7.8 3.2l-1.7 1.7A8.2 8.2 0 0 0 8 3.6c-2.2 0-4.3.84-5.9 2.3L.4 4.2A11 11 0 0 1 8 1z" transform="scale(0.95)"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="2" fill="currentColor"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="currentColor" opacity=".45"/></svg></span></div>
+<div class="homebar" id="homebar"></div>
+
+<!-- LOCK -->
+<div class="view on" id="v-lock">
+<img class="wallbg" src="assets/stage1.jpg" alt="">
+<div class="shade"></div>
+<div class="lock-top">🔒</div>
+<div class="lock-clock"><div class="lock-date" id="lock-date">2月24日 火曜日</div><div class="lock-time" id="lock-time">9:41</div></div>
+<div class="lock-notifs">
+<button class="lnotif" data-go="line"><span class="ln-ic">💬</span><span style="flex:1"><span class="ln-h">LINE <span>今</span></span><span class="ln-t"><b>マネージャー田村</b>：なおさん、急ぎの連絡です。日本公演の帯同スタッフ、正式に決まりました</span></span></button>
+<button class="lnotif" data-go="line"><img src="assets/av-sakuya.jpeg" alt=""><span style="flex:1"><span class="ln-h">LINE <span>今</span></span><span class="ln-t"><b>WISH 帯同グループ</b>：代々木3日間、神戸3日間、チケットは両会場とも完売です。当日はよろしくお願いします！</span></span></button>
+</div>
+<div class="lock-btns"><span class="lk-btn">🔦</span><span class="lk-btn">📷</span></div>
+<div class="lock-hint">タップしてロック解除</div>
+</div>
+
+<!-- HOME -->
+<div class="view" id="v-home">
+<img class="wallbg" src="assets/group.jpg" alt="">
+<div class="shade"></div>
+<div class="home-scroll">
+<div class="wid-row">
+<div class="wid wid-count"><div class="k">⭐ GLION ARENA KOBE</div><div class="big">神戸まで <b id="cd-num">D-9</b></div><div class="s" id="cd-sub">2027年3月5日(金)〜7日(日)<br>3日間チケット完売</div></div>
+<div class="wid wid-photo"><img src="assets/stage2.jpg" alt=""><span>INTO THE WISH : Face Our WISH</span></div>
+</div>
+<div class="wid-wide"><b>🎤 ツアー帯同ステータス</b><div style="margin-top:7px">
+<div class="grow"><span>公演完成度</span><span id="g-comp-v">50</span></div><div class="gbar"><i id="g-comp" style="width:50%;background:linear-gradient(90deg,#7b61c9,#4fc3e8)"></i></div>
+<div class="grow"><span>コンディション</span><span id="g-cond-v">60</span></div><div class="gbar"><i id="g-cond" style="width:60%;background:linear-gradient(90deg,#34c759,#a8e063)"></i></div>
+<div class="grow"><span>メンバーとの信頼度</span><span id="g-trust-v">45</span></div><div class="gbar"><i id="g-trust" style="width:45%;background:linear-gradient(90deg,#ff9f0a,#ffd76a)"></i></div>
+</div><div id="home-prog" style="font-size:11.5px;color:#888;margin-top:2px">プロローグから始まるよ。LINEを開いてね</div></div>
+<div class="apps">
+<button class="app" data-go="ig"><span class="ic ic-ig">📸</span>Instagram<span class="bdg" data-bdg="ig" style="display:none"></span></button>
+<button class="app" data-go="tt"><span class="ic ic-tt">♪</span>TikTok<span class="bdg" data-bdg="tt" style="display:none"></span></button>
+<button class="app" data-go="cal"><span class="ic ic-cal"><span class="cwd" id="cal-wd">TUE</span><span class="cd2" id="cal-d">24</span></span>カレンダー</button>
+<button class="app" data-go="notes"><span class="ic ic-note"><span class="nb"></span><span class="nl"></span><span class="nl"></span></span>帯同メモ<span class="bdg" data-bdg="notes" style="display:none"></span></button>
+<button class="app" data-go="photos"><span class="ic ic-photo">🌼</span>写真</button>
+<button class="app" data-go="set"><span class="ic ic-set">⚙️</span>設定</button>
+<button class="app" id="app-reset"><span class="ic" style="background:linear-gradient(180deg,#ffb3ad,#ff8a80)">↺</span>最初から</button>
+<button class="app" data-go="notes"><span class="ic" style="background:linear-gradient(135deg,#7b61c9,#4fc3e8);color:#fff">⭐</span>END記録</button>
+</div>
+</div>
+<div class="dock">
+<button class="app" data-go="line"><span class="ic ic-tel">📞</span></button>
+<button class="app" data-go="line"><span class="ic ic-line" style="color:#fff;font-weight:900;font-size:19px">LINE</span><span class="bdg" data-bdg="line" style="display:none"></span></button>
+<button class="app" data-go="ig"><span class="ic ic-ig">📸</span></button>
+<button class="app" data-go="tt"><span class="ic ic-tt">♪</span></button>
+</div>
+</div>
+
+<!-- LINE LIST -->
+<div class="view" id="v-line">
+<div class="ll-head"><h2>トーク</h2><div class="ll-icons"><span>🔍</span><span>👤＋</span><span>⚙️</span></div></div>
+<div class="abody" id="line-list"></div>
+<div class="ll-tabs"><button>🏠<span>ホーム</span></button><button style="font-weight:800">💬<span>トーク</span></button><button>📰<span>ニュース</span></button><button>👛<span>ウォレット</span></button></div>
+</div>
+
+<!-- CHAT -->
+<div class="view" id="v-chat">
+<div class="chat-head"><button class="back" data-back="line">‹</button><h2 id="chat-title">トーク</h2><span class="hic">🔍</span><span class="hic">☰</span></div>
+<div class="chat-body" id="chat-body"></div>
+<div id="chat-panel"></div>
+<div class="chat-foot" id="chat-foot"><span class="plus">＋</span><div class="chat-in">メッセージを入力</div><span style="font-size:20px">😊</span><button class="send-b" id="chat-next">▶ 進む</button></div>
+</div>
+
+<!-- FREE CHAT -->
+<div class="view" id="v-free">
+<div class="chat-head"><button class="back" data-back="line">‹</button><h2>サクヤ（フリーチャット）</h2><span class="hic">📞</span></div>
+<div class="chat-body" id="free-body"></div>
+<div class="chat-foot"><span class="plus">＋</span><input class="free-in" id="free-input" type="text" placeholder="サクヤに話しかける…" autocomplete="off"><button class="send-b" id="free-send">送信</button></div>
+</div>
+
+<!-- IG -->
+<div class="view" id="v-ig">
+<div class="ig-head"><button class="back" data-back="home" style="font-size:24px">‹</button><span class="ig-logo">Instagram</span><span class="hic">➕</span><span class="hic">♡</span><span class="hic">✈️</span></div>
+<div class="abody" id="ig-body"></div>
+</div>
+
+<!-- TIKTOK -->
+<div class="view" id="v-tt">
+<div class="tt-feed" id="tt-feed"></div>
+<div class="tt-tabs"><button>🏠<span>ホーム</span></button><button>🧭<span>発見</span></button><button class="mk">⊞</button><button>📥<span>受信箱</span></button><button class="on">👤<span>プロフィール</span></button></div>
+</div>
+
+<!-- CALENDAR -->
+<div class="view" id="v-cal">
+<div class="ahead"><button class="back" data-back="home">‹</button><h2>カレンダー <span class="sub">ツアー日程（史実）</span></h2></div>
+<div class="abody"><div class="cal-wrap" id="cal-wrap"></div></div>
+</div>
+
+<!-- NOTES -->
+<div class="view" id="v-notes">
+<div class="ahead"><button class="back" data-back="home">‹</button><h2>帯同メモ <span class="sub">観察記録＆ENDコレクション</span></h2></div>
+<div class="abody" id="notes-body" style="background:#fbf7e8"></div>
+</div>
+
+<!-- PHOTOS -->
+<div class="view" id="v-photos">
+<div class="ahead"><button class="back" data-back="home">‹</button><h2>写真 <span class="sub" id="ph-count"></span></h2><span class="hic">⋯</span></div>
+<div class="abody"><div class="ph-grid" id="ph-grid"></div></div>
+</div>
+<div class="view" id="v-photoview">
+<div class="ahead" style="background:#000;color:#fff;border-color:#222"><button class="back" data-back="photos" style="color:#fff">‹</button><h2 id="pv-title">写真</h2></div>
+<img id="pv-img" src="" alt=""><div class="pv-cap" id="pv-cap"></div>
+</div>
+
+<!-- CALL -->
+<div class="view" id="v-call">
+<img class="cav" id="call-av" src="assets/av-sion.jpeg" alt="">
+<div class="cnm" id="call-name">シオン</div>
+<div class="cst" id="call-status">着信中…</div>
+<div class="csub" id="call-sub"></div>
+<div class="call-grid" id="call-grid" style="display:none">
+<div class="cb"><i>🔇</i>消音</div><div class="cb"><i>⌨️</i>キーパッド</div><div class="cb"><i>🔊</i>スピーカー</div>
+<div class="cb"><i>➕</i>追加</div><div class="cb"><i>📹</i>FaceTime</div><div class="cb"><i>👤</i>連絡先</div></div>
+<div class="call-btns" id="call-btns"><button class="cbtn" id="call-dec"><i class="dec">📞</i>拒否</button><button class="cbtn" id="call-acc"><i class="acc">📞</i>応答</button></div>
+<div class="call-end" id="call-end" style="display:none"><button id="call-hang"><i>📞</i></button><div style="font-size:11.5px;margin-top:5px">タップで次へ／終了</div></div>
+</div>
+
+<!-- ENDING -->
+<div class="view" id="v-ending">
+<img class="wallbg" id="end-bg" src="assets/stage1.jpg" alt=""><div class="shade"></div>
+<div class="ec"><div class="ek">ENDING</div><h3 id="end-title"></h3><div class="et" id="end-text"></div><div class="gs" id="end-gauges"></div><div class="fin" id="end-fin">- fin -</div>
+<button class="bigbtn" id="end-home" style="max-width:260px">ホームへ戻る</button>
+<div style="font-size:11.5px;color:#cfc9e6;margin-top:10px">クリア特典：サクヤとのフリーチャットが解放されたよ（LINEから）</div></div>
+</div>
+
+<!-- SETTINGS -->
+<div class="view" id="v-set">
+<div class="ahead"><button class="back" data-back="home">‹</button><h2>設定</h2></div>
+<div class="abody" style="background:#f2f2f7">
+<button class="set-row" id="set-reset">最初からプレイし直す <span>セーブ削除</span></button>
+<div class="set-row">バージョン <span>v1.0</span></div>
+<div class="set-row">ボイス <span>未収録（後付け可能な構造）</span></div>
+<div style="padding:16px;font-size:12px;color:#888;line-height:1.8">『推しのツアーに帯同する件』は実在の人物を題材にした創作フィクション（ファンメイド作品）です。登場人物の発言・公演演出・セットリスト等は創作であり、実在の内容とは関係ありません。日程・会場・リリース実績は公開されている史実に基づきます。<br>なおのアバターには本人の写真を使用していません（イニシャルアイコン）。<br>画像素材：KProfiles等のプロフィール写真、メディア掲載写真、公式系SNS掲載写真等（権利は各権利者に帰属します）。</div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div></div>
+<script>
+"use strict";
+/* ============ DATA ============ */
+const M={
+ sion:{n:"シオン",av:"assets/av-sion.jpeg",c:"#7b61c9"},
+ yushi:{n:"ユウシ",av:"assets/av-yushi.jpeg",c:"#4a90d9"},
+ riku:{n:"リク",av:"assets/av-riku.jpeg",c:"#e8873a"},
+ jaehee:{n:"ジェヒ",av:"assets/av-jaehee.jpeg",c:"#3aa655"},
+ ryo:{n:"リョウ",av:"assets/av-ryo.jpeg",c:"#d95f7b"},
+ sakuya:{n:"サクヤ",av:"assets/av-sakuya.jpeg",c:"#c94f7c"},
+ mgr:{n:"マネージャー田村",av:"",c:"#666"},
+ staff:{n:"公演運営 本部",av:"",c:"#33506e"}
+};
+const THREADS={
+ mgr:{title:"マネージャー田村",av:"",c:"#666",ini:"田"},
+ group:{title:"WISH 帯同グループ",av:"assets/group.jpg",c:"#7b61c9",ini:"W"},
+ sion:{title:"シオン",av:"assets/av-sion.jpeg",c:"#7b61c9",ini:"シ"},
+ sakuya:{title:"サクヤ",av:"assets/av-sakuya.jpeg",c:"#c94f7c",ini:"サ"},
+ jaehee:{title:"ジェヒ",av:"assets/av-jaehee.jpeg",c:"#3aa655",ini:"ジ"},
+ ryo:{title:"リョウ",av:"assets/av-ryo.jpeg",c:"#d95f7b",ini:"リ"}
+};
+/* scenes: steps = {f:memberKey,t} | {me:t} | {sys:t} | {img:src,cap,f} | {day:t} | {choice:[{t,e:{},r:[[key,text]...]}]} | {mission:{opts:[{t,s,e,note}],pick:2}} */
+const SCENES=[
+{id:"s0",thread:"mgr",date:"2月24日(火)",title:"プロローグ ― 帯同決定",steps:[
+ {day:"2027年2月24日（火）"},
+ {f:"mgr",t:"なおさん、お疲れさまです。正式に決まりました。NCT WISH 2ndツアー『INTO THE WISH : Face Our WISH』日本公演、通訳兼アーティストサポートとして帯同をお願いします"},
+ {f:"mgr",t:"日程は代々木第一体育館 2/26〜28の3日間、そのあと神戸・GLION ARENA KOBE 3/5〜7の3日間です"},
+ {me:"ありがとうございます。……正直、規模を聞くたびに緊張します"},
+ {f:"mgr",t:"でしょうね。彼ら、2024年2月に東京ドームでデビューショーケースをやったグループですよ。去年のリリースだけでも、日本1stミニ『WISHLIST』、韓国1stフル『Ode to Love』は累計187万枚、日本シングル『YO-I-DON!』はダブルプラチナ、秋の『I SPY』は初日120万枚。poppop以降4作連続ミリオンセラーで、音楽番組1位も通算12冠"},
+ {f:"mgr",t:"今回のツアーは1月にソウルの高尺スカイドームで開幕して、すでに大きな反響です。代々木も神戸もチケットは完売。集客の心配はゼロです。怖いのは逆で――満員の期待に、完璧な公演で応えなきゃいけないこと"},
+ {choice:[
+  {t:"「任せてください。完璧に回します」と即答する",e:{comp:3,trust:2},r:[["mgr","頼もしい。その意気です。でも無理は禁物ですよ"]]},
+  {t:"「まず課題を洗い出させてください」と段取りから入る",e:{comp:5},r:[["mgr","いいですね、その冷静さが今回の起用理由です"]]},
+  {t:"「サクヤ……じゃなくて、皆さんとは初対面で緊張します」と正直に言う",e:{trust:3},r:[["mgr","はは、正直でよろしい。メンバーはいい子たちですよ"]]}
+ ]},
+ {f:"mgr",t:"では明日、リハーサル会場で顔合わせです。グループLINEにも招待しておきました。よろしくお願いします！"}
+],memo:{t:"帯同メモ①：規模感",b:"NCT WISHは「これから売れる」グループではない。2024年2月、東京ドームでデビューショーケース。2026年だけで『WISHLIST』（1/14）、『Ode to Love』（4/20・累計約187万枚）、『YO-I-DON!/BOY MEETS GIRL』（7/15・RIAJ 2×プラチナ）、『I SPY』（10/12・初日約120万枚、4作連続ミリオン）、音楽番組1位通算12冠。スタッフの仕事は集客ではなく、満員の期待に応える公演を無事故で回すこと。"}},
+{id:"s1",thread:"group",date:"2月24日(火)",title:"第1章 ― 顔合わせ",steps:[
+ {day:"2027年2月24日（火）夜"},
+ {f:"sion",t:"皆さん、明日から日本公演リハです。通訳・サポートのなおさんが入ってくれました。よろしくお願いします！"},
+ {f:"riku",t:"なおさん初めまして！ リクです。日本公演、ホームみたいなものなんで任せてください"},
+ {f:"yushi",t:"ユウシです。よろしく"},
+ {f:"jaehee",t:"ジェヒです！ 私、日本語、もっと上手になります。教えてください！"},
+ {f:"ryo",t:"リョウです。よろしくお願いします〜"},
+ {f:"sakuya",t:"サクヤです。……日本公演、楽しみにしてました。よろしくお願いします"},
+ {me:"皆さん初めまして、なおです。通訳とサポートを担当します。韓国語のMCも、日本語のMCも、全力で支えます"},
+ {f:"sion",t:"心強いです。……あの、確認なんですけど、代々木のチケット、ほんとに3日間とも完売してるんですか"},
+ {f:"riku",t:"シオン、それ何回確認するの（笑）完売だって。神戸も"},
+ {f:"sion",t:"いや、完売って聞くと余計に……失敗できないなって。リハの確認、もう一周しとこうかな"},
+ {choice:[
+  {t:"「シオン、確認リストは私と半分ずつ持とう。一人で抱えないで」",e:{trust:5,cond:2},r:[["sion","……ありがとうございます。そうしてもらえると、正直すごく助かります"]]},
+  {t:"「大丈夫、リハで全部潰そう」と背中を押す",e:{comp:3},r:[["sion","はい。……はい、潰しましょう"]]},
+  {t:"リクに「いつもこんな感じ？」と聞く",e:{trust:2},r:[["riku","いつもです（笑）でも本番のシオンは誰より頼りになりますよ"]]}
+ ]},
+ {f:"sakuya",t:"なおさん、明日、リハのあと少しだけ日本語のコメント見てもらえますか。……変なところがあったら、直したいので"},
+ {me:"もちろん。気になるところは全部持ってきて"},
+ {f:"sakuya",t:"ありがとうございます。じゃあ、明日"}
+],memo:{t:"帯同メモ②：メンバーの第一印象",b:"シオン＝リーダー。考えすぎる・心配性は自覚あり。でもそれは満員の観客への責任感の裏返し。ユウシ＝口数は少ない。言う時は言う。リク＝場の潤滑油。ジェヒ＝韓国組、日本語猛勉強中（方言ネタは本人の鉄板）。リョウとサクヤは2007年生まれの同学年コンビ。サクヤ＝言葉選びが丁寧で、少し不思議な感性。第一声から『楽しみにしてました』の選び方が彼らしい。"}},
+{id:"s2",thread:"group",date:"2月25日(水)",title:"第2章 ― 東京Day1 リハーサル",steps:[
+ {day:"2027年2月25日（水）国立代々木競技場第一体育館"},
+ {sys:"リハーサル開始。代々木第一体育館は3日間ソールドアウト公演の会場。スタッフ全員、無線が飛び交っている"},
+ {f:"sion",t:"なおさん、MCの流れ、韓国側の演出チームとの認識が一個ずれてます。『メントの2ブロック目』、向こうは衣装替え後だと思ってて"},
+ {f:"mgr",t:"（小声で）なおさん、ここ通訳の腕の見せどころです"},
+ {choice:[
+  {t:"両者の資料を並べて、ずれの発生源から特定する",e:{comp:6},r:[["sion","……発生源まで分かると、向こうも納得が早いですね。助かりました"]]},
+  {t:"とにかく演出チームに走って直接確認する",e:{comp:3,cond:-2},r:[["mgr","早かったです。でも次は資料も一緒に持っていきましょう"]]},
+  {t:"ジェヒに韓国語のニュアンス確認を頼む",e:{trust:3,comp:3},r:[["jaehee","私でよければ！ ……あ、今の言い方、丁寧すぎましたか？"]]}
+ ]},
+ {f:"jaehee",t:"なおさん！ 私の日本語MC、『みなさん、今日も、さいこうの夜にしましょう！』……どうですか。イントネーション"},
+ {me:"意味は完璧。『さいこう』の『こ』を少し弱くするともっと自然だよ"},
+ {f:"jaehee",t:"さい、こう……さいこう！ あ、ほんとだ。……なおさん、教えるの上手です"},
+ {mission:{pick:2,opts:[
+   {t:"通訳フォロー",s:"韓国側演出チームと全メントの最終すり合わせ",e:{comp:6},note:"メントのずれは完全に解消。シオンの肩の力が少し抜けた"},
+   {t:"楽屋ケア",s:"喉ケア用の温かい飲み物と加湿を手配",e:{cond:6},note:"ジェヒ『楽屋、あったかい……』メンバー全員の表情がゆるむ"},
+   {t:"SNS撮影補助",s:"公式SNS用のリハ写真・縦動画を撮影",e:{comp:2,trust:3},note:"投稿は即バズ。『リハからこの熱量』とファンの反響が大きい"},
+   {t:"トラブル対応",s:"イヤモニの予備と交換手順を先回り確認",e:{comp:5},note:"運営本部『先に潰してくれて助かった』と信頼アップ"},
+   {t:"休憩確保",s:"メンバーの休憩20分をスケジュールに死守",e:{cond:5,trust:2},note:"サクヤが休憩中、窓の外を見ながら『明日、晴れるといいですね』とぽつり"}
+ ]}},
+ {f:"sakuya",t:"なおさん、さっきのコメント、見てもらった通り直しました。……『会場の皆さん』じゃなくて『今日来てくれた皆さん』に変えたら、なんか、近くなった気がします"},
+ {me:"うん、すごくいいと思う。サクヤの言葉選び、もともと丁寧だよね"},
+ {f:"sakuya",t:"……そう言ってもらえると、安心します"}
+],memo:{t:"帯同メモ③：リハの観察",b:"サクヤの言葉選びは『近さ』への感度が高い。『会場の皆さん』→『今日来てくれた皆さん』。小さな変更だけど、満員の観客一人ひとりに届けようとする人の発想。ジェヒの日本語は丸暗記部分は綺麗、台本から外れると止まる。アドリブの逃げ道を用意してあげると強い。"}},
+{id:"s3",thread:"group",date:"2月27日(金)",title:"第3章 ― 東京本番",steps:[
+ {day:"2027年2月27日（金）代々木公演 2日目"},
+ {sys:"開場。1万人超の観客が入っていく。公式SNSの実況投稿は開演前から大きな反響"},
+ {f:"riku",t:"楽屋まで歓声聞こえるんだけど。すごいね、東京"},
+ {f:"yushi",t:"……緊張してきた"},
+ {f:"sion",t:"ユウシ、大丈夫。昨日の初日、完璧だった。今日も同じことやるだけ"},
+ {f:"sakuya",t:"なおさん。本番前に一つだけ。……MCの2ブロック目、私の番、合図は袖からお願いできますか。目で見えると安心するので"},
+ {choice:[
+  {t:"「任せて。絶対に見える位置にいる」",e:{trust:5},r:[["sakuya","……はい。それなら大丈夫です"]]},
+  {t:"「合図の形、決めておこう」と小さなサインを決める",e:{trust:4,comp:3},r:[["sakuya","じゃあ、これで。……ふふ、秘密の合図ですね"]]},
+  {t:"「サクヤなら合図なしでもいけるよ」と笑う",e:{comp:2},r:[["sakuya","……いや、やっぱりお願いします。安心したいので"]]}
+ ]},
+ {img:"assets/stage1.jpg",f:"riku",cap:"（運営撮影のモニター写真が共有された）"},
+ {f:"riku",t:"見てこの景色。……やっててよかったって思う瞬間"},
+ {f:"jaehee",t:"私、MC、さいこうに言えました！（『さいこう』の発音）"},
+ {f:"sion",t:"なおさん、袖からの合図、全部届いてました。……ありがとうございます。明日、最終日もお願いします"},
+ {sys:"公演は大きな反響で終了。公式アカウントの投稿には数十万のいいねがついている"}
+],memo:{t:"帯同メモ④：満員の景色",b:"代々木の満員は『集まるか』の景色じゃない。『応えなきゃ』の景色。サクヤが袖の合図を求めたのは弱さじゃなくて、届ける精度を上げたい人の慎重さ。約束した位置に立つこと。それだけで信頼は積み上がる。"},ig:1,tt:1,photo:1},
+{id:"s4",thread:"sakuya",date:"2月27日(金) 夜",title:"第4章 ― 公演後の短いやり取り",steps:[
+ {day:"2027年2月27日（金）23:40"},
+ {f:"sakuya",t:"なおさん、まだ起きてますか"},
+ {me:"起きてるよ。お疲れさま、今日すごく良かった"},
+ {f:"sakuya",t:"……ありがとうございます。あの、今日の合図、ほんとに助かりました。袖を見たら、ちゃんといたから"},
+ {f:"sakuya",t:"私、デビューの時から思ってるんですけど。ステージって、大きいほど、一人じゃないって思えるかどうかで全然違うんですよね"},
+ {choice:[
+  {t:"「一人じゃないよ。スタッフも全員、同じ公演を作ってる」",e:{trust:5},r:[["sakuya","……うん。今日、それがよく分かりました"]]},
+  {t:"「サクヤの言葉、今日もちゃんと客席に届いてたよ」",e:{trust:3,cond:2},r:[["sakuya","届いてましたか。……よかった"]]},
+  {t:"「今日はもう休んで。明日ラストだよ」",e:{cond:4},r:[["sakuya","はい。……なおさんも、早く休んでくださいね"]]}
+ ]},
+ {f:"sakuya",t:"神戸も、よろしくお願いします。おやすみなさい"},
+ {sys:"※このトークは短め。信頼は、長い言葉より『ちゃんといた』ことで積み上がっていく"}
+],memo:{t:"帯同メモ⑤：サクヤの言葉",b:"『ステージは、大きいほど、一人じゃないと思えるかで全然違う』――19歳の人の言葉の選び方じゃない、と思ったけど、東京ドームでデビューした人の3年分なんだと思う。推しとして見てきた人と、仕事で隣に立つ人は、やっぱり少し違う。"}},
+{id:"s5",thread:"ryo",date:"3月4日(木)",title:"第5章 ― 移動日・神戸入り",steps:[
+ {day:"2027年3月4日（木）新幹線・移動日"},
+ {f:"ryo",t:"なおさん事件です。トントンがいません"},
+ {me:"トントン……リョウのぬいぐるみ？ どこまで覚えてる？"},
+ {f:"ryo",t:"東京の楽屋までは確かにいました。……サクヤも探してくれてます"},
+ {f:"sakuya",t:"リョウの席の周り、見た。なかった"},
+ {choice:[
+  {t:"冷静に行動を時系列で聞き取り、東京側スタッフに即連絡",e:{comp:4,trust:3},r:[["ryo","楽屋の椅子の下にいたって！！ 見つかりました、郵送してもらいます。なおさん冷静すぎる"]]},
+  {t:"「大丈夫、絶対見つかる」とまず落ち着かせる",e:{cond:4,trust:2},r:[["ryo","……うん、落ち着いた。あ、東京のスタッフさんから連絡、椅子の下にいたって！"]]},
+  {t:"サクヤと手分けして車内をもう一周探す",e:{trust:4},r:[["sakuya","車内にはなかったです。でも東京側から『見つかった』って。……よかったですね、リョウ"]]}
+ ]},
+ {f:"ryo",t:"トントン、両親の結婚のときの人形で、僕が生まれた時に譲り受けたやつなんです。大事な相棒で。……騒がせてすみません"},
+ {me:"謝らなくていいよ。大事なものは大事って言っていい"},
+ {sys:"神戸到着。夕食はスタッフとメンバーで神戸牛の鉄板焼きへ"},
+ {f:"riku",t:"（グループより）神戸牛、優勝。関西のごはん強すぎる"},
+ {f:"jaehee",t:"私、明日、神戸のファンに『めっちゃ好きやで』って言います。……方言、合ってますか"},
+ {me:"合ってる。ジェヒは釜山の慶尚道方言の人だもんね、関西弁と仲良くなれそう"},
+ {f:"jaehee",t:"そうなんです！ 方言同士、友達になれます"}
+],memo:{t:"帯同メモ⑥：トントンと神戸牛",b:"リョウのトントンは両親の結婚の時の人形で、リョウが生まれた時に譲り受けた大切な相棒。『大事なものは大事と言っていい』――現場では、この一言で空気が決まることがある。神戸入り完了。明日はリハ、そして3/5〜7の3日間、GLION ARENA KOBE。もちろん全日完売。"},ig:2,photo:2},
+{id:"s6",thread:"group",date:"3月5日(金)",title:"第6章 ― 神戸リハとトラブル",steps:[
+ {day:"2027年3月5日（金）GLION ARENA KOBE"},
+ {sys:"神戸初日。海のそばのアリーナ。リハーサル中、サクヤのイヤモニにノイズが入り始めた"},
+ {f:"staff",t:"なおさん、サクヤさんのイヤモニ、右だけノイズです。本番までに直るか微妙なラインで……"},
+ {f:"sakuya",t:"……なおさん、私、今日このまま出ることになったら。合図、多めにもらえますか"},
+ {choice:[
+  {t:"予備機への交換を即決し、交換中の進行を自分が引き受ける",e:{comp:6,trust:3},r:[["staff","交換完了、ノイズ消えました。判断早くて助かりました"]]},
+  {t:"サクヤに状況を全部説明してから、本人の希望を聞く",e:{trust:6},r:[["sakuya","説明してもらえると落ち着きます。……交換、お願いします。合図も、念のため多めで"]]},
+  {t:"音響チームの判断を待つ",e:{comp:1},r:[["sion","（小声で）なおさん、こういう時、先に動いてくれる人がいると現場が安心するんです"]]}
+ ]},
+ {mission:{pick:2,opts:[
+   {t:"通訳フォロー",s:"神戸公演用のMC差し替えを韓国側と最終確認",e:{comp:6},note:"神戸限定メント『神戸の夜景みたいに、今日の景色も忘れません』が決まった"},
+   {t:"楽屋ケア",s:"本番前の軽食（関西風・食べやすさ重視）を手配",e:{cond:6},note:"ユウシ『……このおにぎり、うまい』と珍しく声に出した"},
+   {t:"SNS撮影補助",s:"神戸の海を背にした公式TikTokを撮影",e:{trust:3,comp:2},note:"投稿は公開直後から大きな反響。コメント欄は各国語で埋まった"},
+   {t:"トラブル対応",s:"全員のイヤモニ予備チェックを総ざらい",e:{comp:5},note:"本部の信頼が大きく上がった。本番の不安要素ゼロへ"},
+   {t:"休憩確保",s:"開演前の静かな30分を確保",e:{cond:5,trust:2},note:"シオンが一人でセットリストを眺め、静かに頷いていた"}
+ ]}},
+ {f:"sion",t:"なおさん、今日の判断、早かった。……僕、考えすぎるから、横に即決できる人がいると本当に助かるんです"},
+ {me:"シオンの慎重さがあるから、即決が生きるんだよ。両方いるのが強いチーム"},
+ {f:"sion",t:"……ありがとうございます。じゃあ、神戸3日間、強いチームでいきましょう"}
+],memo:{t:"帯同メモ⑦：トラブル対応の原則",b:"トラブル時は『状況を隠さない』『本人の希望を聞く』『決めたら速い』。シオンの慎重さと、スタッフの即決は対立しない。両方あるチームが一番強い。神戸の海は綺麗だった。サクヤがリハの合間にしばらく海を見ていた。"},tt:2,photo:3},
+{id:"s7",thread:"sion",date:"3月6日(土)",title:"第7章 ― 神戸2日目と、夜の電話",call:{who:"sion",lines:[
+  "なおさん、すみません、夜に。……明日、神戸最終日じゃないですか",
+  "僕、最終日って毎回、前日が一番考えちゃうんです。『今日の公演、もっとよくできたんじゃないか』って",
+  "でも今日、袖から見てて思ったんです。なおさんが来てから、楽屋の空気が、前より静かに整ってるって",
+  "通訳の人が、メンバーの言葉まで大事にしてくれるの、初めてで",
+  "……ありがとうございます。明日、最高の最終日にしましょう。リーダーとして、僕も頑張ります",
+  "おやすみなさい。……あ、サクヤが『明日も合図お願いします』って言ってました。伝言です（笑）"
+ ]},steps:[
+ {day:"2027年3月6日（土）夜 ― 電話のあと"},
+ {f:"sion",t:"電話、ありがとうございました。文字でも残しておきます。明日、よろしくお願いします"},
+ {me:"こちらこそ。シオン、今日もよくやってたよ。明日は楽しもう"},
+ {f:"sion",t:"はい。……なおさんみたいなスタッフさんがいてくれて、よかったです"}
+],memo:{t:"帯同メモ⑧：リーダーの夜",b:"シオンの電話。『通訳の人が、メンバーの言葉まで大事にしてくれるのは初めて』。通訳は言葉を運ぶ仕事だけど、ほんとは『その人が言いたかったこと』を運ぶ仕事なんだと思う。明日、神戸最終日。"}},
+{id:"s8",thread:"sakuya",date:"3月7日(日)",title:"最終章 ― 神戸最終日",steps:[
+ {day:"2027年3月7日（日）GLION ARENA KOBE 最終日"},
+ {f:"sakuya",t:"なおさん、おはようございます。今日で神戸、最後ですね"},
+ {f:"sakuya",t:"あの、開演前に言っておきたくて。……このツアー、なおさんがいてくれてよかったです。言葉にすると、うまく言えないんですけど"},
+ {choice:[
+  {t:"「私もだよ。サクヤの言葉、毎回ちゃんと届いてた」",e:{trust:6},r:[["sakuya","……うん。今日も、届けます。全部"]]},
+  {t:"「今日の合図も任せて。最後まで袖にいる」",e:{trust:4,comp:3},r:[["sakuya","はい。……それが一番、嬉しいです"]]},
+  {t:"「終わったら、ちゃんと労おうね。全員で」",e:{cond:4,trust:2},r:[["sakuya","ですね。全員で。……なおさんも含めて、全員ですよ"]]}
+ ]},
+ {img:"assets/stage2.jpg",f:"sakuya",cap:"（本番直前、袖から撮った一枚が共有された）"},
+ {f:"sakuya",t:"行ってきます"},
+ {sys:"神戸最終日、開演。満員のGLION ARENA KOBEが揺れた――"}
+],memo:{t:"帯同メモ⑨：最終日の朝",b:"サクヤは『うまく言えない』と言いながら、一番大事なことだけは毎回、正確な言葉で置いていく。『なおさんがいてくれてよかった』。推しだった人のこの言葉を、スタッフとして受け取る日が来るとは思わなかった。"},ig:3,photo:4}
+];
+const MEMO_ORDER=SCENES.map(s=>s.memo);
+const EPILOGUE="神戸の3日間が終わっても、ツアーは続いていく。来週は福岡・北九州メッセ（3/13〜14）、その次は愛知・ポートメッセなごや（3/21〜22）。なおの帯同も、まだ続く。";
+const ENDINGS={
+ perfect:{t:"パーフェクトツアーEND ―「同じ景色」",bg:"assets/stage1.jpg",tx:"神戸最終日は、文句のつけようがない公演だった。\nメントの合図は一度もずれることなく、サクヤの言葉は一番後ろの席まで届いた気がした。終演後、楽屋に戻る廊下でサクヤが立ち止まって、短く言った。\n『今日の景色、忘れないと思います。……なおさんと見た景色だから』\n大げさな言葉はなかった。でも、袖で並んで同じ満員を見た数秒が、このツアーの全部だった。\n\n"+EPILOGUE},
+ warm:{t:"あたたかい完走END ―「また、次の街で」",bg:"assets/group.jpg",tx:"小さな綻びはあった。でも神戸最終日は、温かい拍手の中で終わった。\n帰りの車両で、シオンが『強いチームでしたね』と笑い、サクヤは窓の外の神戸の夜景を見ながら言った。\n『福岡も、よろしくお願いします』\n仕事の信頼は、少しずつ、確かに個人的な信頼になっていた。続きは、次の街で。\n\n"+EPILOGUE},
+ bitter:{t:"ほろ苦い完走END ―「届かなかった数センチ」",bg:"assets/kobe.jpg",tx:"公演は無事に完走した。満員の拍手も本物だった。\nでも、袖の合図が一度だけ遅れたこと、休めなかった誰かの疲れた顔を、なおは覚えている。終演後、サクヤはいつも通り丁寧に『ありがとうございました』と言って、それ以上は何も言わなかった。\nプロの現場は、そういう数センチの積み重ねだ。次の福岡では、絶対に取り返す。\n\n"+EPILOGUE}
+};
+const IG_POSTS=[
+ {id:1,img:"assets/group.jpg",user:"nctwish_official",loc:"Tokyo, Japan",likes:"1,284,392",cap:"日本公演、間もなく開幕。INTO THE WISH : Face Our WISH ― 代々木第一体育館3日間、皆さまに会えるのを楽しみにしています💫",cm:[["wish_archive","待ってた😭"],["sion_daily","完売公演さすがです"]],time:"2月25日"},
+ {id:2,img:"assets/stage1.jpg",user:"nctwish_official",loc:"国立代々木競技場第一体育館",likes:"2,031,774",cap:"TOKYO DAY2 💫 今日も満員の景色をありがとうございました。メントも、歌も、全部届きましたか？ 明日は東京最終日！",cm:[["sakuya_thoughts","サクヤの言葉選び今日も素敵だった"],["wish_jp_fan","合図の息ぴったりで感動した"]],time:"2月27日"},
+ {id:3,img:"assets/kobe.jpg",user:"nctwish_official",loc:"GLION ARENA KOBE",likes:"1,764,208",cap:"KOBE ⚓ 海のそばのアリーナに到着しました。神戸3日間、よろしくお願いします！",cm:[["kobe_wish","神戸へようこそ！"],["jaehee_jp","ジェヒの関西弁楽しみ"]],time:"3月4日"},
+ {id:4,img:"assets/stage2.jpg",user:"nctwish_official",loc:"GLION ARENA KOBE",likes:"2,458,913",cap:"KOBE FINAL DAY 💫 神戸の皆さんの声、ステージの端まで届いていました。ツアーはこのあと福岡・愛知へ続きます。また会いましょう！",cm:[["wish_archive","神戸お疲れさまでした😭"],["ryo_tonton","トントンも神戸に来られてよかった"]],time:"3月7日"}
+];
+const TT_POSTS=[
+ {img:"assets/stage2.jpg",at:"@nctwish_official",cap:"リハーサルの熱量、そのまま置いていきます💫 #NCTWISH #FaceOurWISH #代々木",music:"♪ 音源 - WISH (Original Sound)",likes:"184.2万",cmN:"8,412",sh:"3.1万"},
+ {img:"assets/kobe.jpg",at:"@nctwish_official",cap:"神戸の海とアリーナ⚓ KOBE DAY1 スタート！ #NCTWISH #GLIONARENAKOBE #神戸",music:"♪ 音源 - poppop (NCT WISH)",likes:"213.7万",cmN:"1.2万",sh:"4.6万"},
+ {img:"assets/av-sakuya.jpeg",at:"@nctwish_official",cap:"サクヤの言葉選びクイズ💭「今日来てくれた皆さん」派？ #SAKUYA #NCTWISH",music:"♪ 音源 - Hands Up (NCT WISH)",likes:"267.9万",cmN:"2.4万",sh:"6.8万"}
+];
+const PHOTOS=[
+ {img:"assets/group.jpg",cap:"ホーム画面の6人。2026年リリースラッシュを駆け抜けた、今のNCT WISH",unlock:0},
+ {img:"assets/stage1.jpg",cap:"東京公演・代々木第一体育館。満員の景色（運営モニターより）",unlock:3},
+ {img:"assets/stage2.jpg",cap:"リハーサル／本番のステージ。星のセットが象徴的",unlock:0},
+ {img:"assets/kobe.jpg",cap:"神戸の港。GLION ARENA KOBEはこの海のそば",unlock:5},
+ {img:"assets/av-sakuya.jpeg",cap:"サクヤ。言葉選びの丁寧さは、写真の佇まいにも出る",unlock:6},
+ {img:"assets/av-sion.jpeg",cap:"シオン。リーダーの慎重さは、責任感の形",unlock:0},
+ {img:"assets/av-jaehee.jpeg",cap:"ジェヒ。日本語勉強中、方言は鉄板ネタ",unlock:0},
+ {img:"assets/av-ryo.jpeg",cap:"リョウ。トントンの相棒",unlock:5},
+ {img:"assets/av-yushi.jpeg",cap:"ユウシ。口数は少ない。言う時は言う",unlock:0},
+ {img:"assets/av-riku.jpeg",cap:"リク。場の潤滑油",unlock:0}
+];
+const FREE=[
+ {k:["おつかれ","お疲れ"],r:"お疲れさまです。……なおさんも、今日はちゃんと休んでくださいね"},
+ {k:["ありがとう"],r:"こちらこそです。……あの、帯同の間、ずっとありがとうございました"},
+ {k:["神戸"],r:"神戸、夜景が綺麗でしたね。海のそばの会場、あの感じ好きです"},
+ {k:["東京","代々木"],r:"代々木の満員、すごかったですね。デビューした東京ドームのことも、少し思い出しました"},
+ {k:["肉","ごはん","神戸牛"],r:"神戸牛、おいしかったです。……リクが一番食べてました"},
+ {k:["トントン","ぬいぐるみ"],r:"トントン、無事にリョウのところに戻りましたよ。よかったです"},
+ {k:["リョウ"],r:"リョウとは同学年なので、話す時は敬語じゃないです。……静かに、気が合うんです"},
+ {k:["シオン"],r:"シオンくんは、考えすぎるところもあるけど、リーダーとして一番信頼してます"},
+ {k:["ユウシ"],r:"ユウシくん、口数は少ないですけど、言う時は核心を言いますよね"},
+ {k:["リク"],r:"リクがいると楽屋が明るくなります。潤滑油って、ほんとにそう思います"},
+ {k:["ジェヒ"],r:"ジェヒの日本語、どんどん上手くなってます。関西弁まで覚え始めて、すごいです"},
+ {k:["歌","うた"],r:"歌う時が、一番、自分でいられる気がします"},
+ {k:["ダンス","踊"],r:"ダンスは嘘つけないので好きです。練習した分だけ、出るので"},
+ {k:["好き"],r:"……好き、ですか。その言葉、軽く使えないタイプなので。……でも、なおさんと仕事する時間は、好きでした"},
+ {k:["また","福岡","次"],r:"次は福岡ですね。また袖に、いてもらえますか。……お願いします"},
+ {k:["眠","ねむ"],r:"少し眠いです。でも、もう少しだけ起きてます"},
+ {k:["写真"],r:"写真、撮るより撮られる方が多いですけど……なおさんが撮ったやつ、結構好きでした"},
+ {k:["合図","袖"],r:"袖の合図、目に入るだけで安心するんです。……内緒ですよ"}
+];
+const FREE_DEFAULT=["うん、聞いてます","……そうですね。もう少しだけ、聞かせてください","ふふ、なおさんらしいですね","今日の話、覚えておきます"];
+</script>
+<script>
+"use strict";
+/* ============ STATE ============ */
+const KEY="wishTour_v1", EKEY="wishTour_endings";
+let S;
+function defState(){return {scene:0,step:0,shown:0,gauges:{comp:50,cond:60,trust:45},memos:[],ig:0,tt:0,photosMax:0,ended:false,endId:"",callDone:false,freeCount:0,likedIG:{},likedTT:{},seenLock:true};}
+function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&typeof j.scene==="number")return Object.assign(defState(),j);}catch(e){}return defState();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function endingsGot(){try{return JSON.parse(localStorage.getItem(EKEY))||{};}catch(e){return{};}}
+S=load();
+/* ============ UTIL ============ */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(el._h);el._h=setTimeout(()=>el.classList.remove("show"),2300);}
+function show(id){$$(".view").forEach(v=>v.classList.remove("on"));$("#v-"+id).classList.add("on");$("#statusbar").classList.toggle("dark",["line","ig","cal","notes","photos","set"].includes(id));window.scrollTo(0,0);if(id==="home")renderHome();if(id==="line")renderLineList();if(id==="ig")renderIG();if(id==="tt")renderTT();if(id==="cal")renderCal();if(id==="notes")renderNotes();if(id==="photos")renderPhotos();}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function avHTML(key,size,sq){const m=M[key];if(m&&m.av)return `<img class="${sq?"avsq":"av"}" src="${m.av}" style="width:${size}px;height:${size}px" alt="">`;return `<span class="sil" style="width:${size}px;height:${size}px;background:${m?m.c:"#999"};font-size:${Math.round(size*0.38)}px">${m?m.n[0]:"?"}</span>`;}
+function clamp(v){return Math.max(0,Math.min(100,v));}
+function applyE(e){if(!e)return;for(const k in e){S.gauges[k]=clamp(S.gauges[k]+e[k]);}renderGauges();}
+function renderGauges(){$("#g-comp").style.width=S.gauges.comp+"%";$("#g-cond").style.width=S.gauges.cond+"%";$("#g-trust").style.width=S.gauges.trust+"%";$("#g-comp-v").textContent=S.gauges.comp;$("#g-cond-v").textContent=S.gauges.cond;$("#g-trust-v").textContent=S.gauges.trust;}
+/* clock */
+function tick(){const d=new Date(),h=d.getHours(),m=String(d.getMinutes()).padStart(2,"0");$("#sb-time").textContent=h+":"+m;$("#lock-time").textContent=h+":"+String(m).padStart(2,"0");const wd=["日","月","火","水","木","金","土"][d.getDay()];$("#lock-date").textContent=(d.getMonth()+1)+"月"+d.getDate()+"日 "+wd+"曜日";const wde=["SUN","MON","TUE","WED","THU","FRI","SAT"][d.getDay()];$("#cal-wd").textContent=wde;$("#cal-d").textContent=d.getDate();}
+setInterval(tick,15000);tick();
+/* countdown: in-story, based on progress */
+function renderHome(){renderGauges();const days=[9,9,8,8,7,4,1,0,0];const d=days[Math.min(S.scene,days.length-1)];$("#cd-num").textContent=S.ended?"完走🎉":"D-"+d;$("#cd-sub").innerHTML=d>0?"2027年3月5日(金)〜7日(日)<br>3日間チケット完売":"2027年3月5日(金)〜7日(日)<br>神戸公演 開催中！";$("#home-prog").textContent=S.ended?("エンディング到達："+(ENDINGS[S.endId]?ENDINGS[S.endId].t:"")):(S.scene>=SCENES.length?"最終章まで到達":SCENES[S.scene].title+" が待ってるよ。LINEを開いてね");
+ const lb=S.ended?0:1;setBdg("line",lb);setBdg("ig",Math.max(0,S.ig- (S._igSeen||0)));setBdg("tt",Math.max(0,S.tt-(S._ttSeen||0)));setBdg("notes",S.memos.length-(S._memoSeen||0));}
+function setBdg(k,n){$$('[data-bdg="'+k+'"]').forEach(b=>{b.style.display=n>0?"flex":"none";b.textContent=n;});}
+/* nav */
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g){const t=g.dataset.go;if(t==="ig")S._igSeen=S.ig;if(t==="tt")S._ttSeen=S.tt;if(t==="notes")S._memoSeen=S.memos.length;save();show(t);}const b=e.target.closest("[data-back]");if(b)show(b.dataset.back);});
+$("#homebar").addEventListener("click",()=>show("home"));
+$("#v-lock").addEventListener("click",()=>show("home"));
+$("#app-reset").addEventListener("click",()=>{if(confirm("セーブを消して最初からプレイしますか？")){localStorage.removeItem(KEY);S=defState();save();show("home");toast("リセットしたよ");}});
+$("#set-reset").addEventListener("click",()=>{if(confirm("セーブを消して最初からプレイしますか？")){localStorage.removeItem(KEY);S=defState();save();show("home");toast("リセットしたよ");}});
+/* ============ LINE LIST ============ */
+function sceneOfThread(tid){return SCENES.findIndex(s=>s.thread===tid);}
+function renderLineList(){const el=$("#line-list");let h=`<button class="me-row"><span class="sil" style="width:50px;height:50px;background:#06c755;font-size:19px">N</span><span><span class="nm">なお（スタッフ）</span><div class="st">ツアー帯同中⭐ 神戸まで全力サポート</div></span></button><div class="sec-t">トーク</div>`;
+ const order=["mgr","group","sion","sakuya","ryo"];
+ const curSc=!S.ended?SCENES[S.scene]:null;
+ order.forEach(tid=>{const th=THREADS[tid];
+  const mine=SCENES.map((s,i)=>[s,i]).filter(x=>x[0].thread===tid);
+  const doneOnes=mine.filter(x=>x[1]<S.scene||S.ended);
+  const lastDone=doneOnes.length?doneOnes[doneOnes.length-1][0]:null;
+  let badge="",prev="",time="";
+  if(S.ended&&tid==="sakuya"){badge=`<span class="ub" style="background:#c94f7c">FREE</span>`;prev="フリーチャット解放中（タップで話せる）";time="3月7日(日)";}
+  else if(curSc&&curSc.thread===tid){badge=`<span class="ub">1</span>`;prev=curSc.title+" ― タップで開く";time=curSc.date;}
+  else if(lastDone){badge=`<span class="done">✓ 済</span>`;prev=lastDone.title+"（完了）";time=lastDone.date;}
+  else{prev="（まだ届いていないトーク）";}
+  const av=th.av?`<img class="avsq" src="${th.av}" style="width:50px;height:50px" alt="">`:`<span class="sil" style="width:50px;height:50px;border-radius:38%;background:${th.c};font-size:18px">${th.ini}</span>`;
+  h+=`<button class="thread" data-thread="${tid}">${av}<span class="tt"><span class="tn">${th.title}<time>${time}</time></span><span class="tp">${prev}</span></span>${badge}</button>`;});
+ h+=`<div class="locknote">物語はトークを開くと進むよ。バッジのあるトークが現在の章。<br>友達とのトークは短め設計（本編優先）。</div>`;
+ el.innerHTML=h;
+ el.querySelectorAll("[data-thread]").forEach(b=>b.addEventListener("click",()=>openThread(b.dataset.thread)));}
+function openThread(tid){
+ if(S.ended&&tid==="sakuya"){openFree();return;}
+ const sc=!S.ended?SCENES[S.scene]:null;
+ if(!sc||sc.thread!==tid){
+   const any=SCENES.some((s,i)=>s.thread===tid&&(i<S.scene||S.ended));
+   toast(any?"このトークは完了済み（記録は帯同メモに残ってるよ）":"まだ届いていないトークだよ");return;}
+ if(sc.call&&!S.callDone){startCall(sc);return;}
+ openChat(sc);}
+/* ============ CHAT ENGINE ============ */
+let cur=null, busy=false;
+function openChat(sc){cur=sc;$("#chat-title").textContent=THREADS[sc.thread].title;show("chat");renderChat();}
+function msgHTML(st){
+ if(st.day)return `<div class="day-pill"><span>${esc(st.day)}</span></div>`;
+ if(st.sys)return `<div class="sys-line">${esc(st.t)}</div>`;
+ if(st.me)return `<div class="msg me"><span class="tm"><span class="rd">既読</span>${"21:"+String(10+S.shown%40)}</span><div class="bub">${esc(st.t)}</div></div>`;
+ const m=M[st.f];
+ if(st.img)return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub imgb"><img src="${st.img}" alt=""></div>${st.cap?`<div class="bub" style="margin-top:4px">${esc(st.cap)}</div>`:""}</div><span class="tm">21:0${S.shown%9}</span></div>`;
+ return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub">${esc(st.t)}</div></div><span class="tm">21:0${S.shown%9}</span></div>`;}
+function renderChat(){const body=$("#chat-body");const sc=cur;let h="";const n=Math.min(S.shown,sc.steps.length);
+ for(let i=0;i<n;i++){const st=sc.steps[i];
+  if(st.choice||st.mission){if(st._me)h+=msgHTML({me:true,t:st._me});if(st._resp)h+=st._resp.map(r=>msgHTML({f:r[0],t:r[1]})).join("");if(st._sysResp)h+=st._sysResp.map(t=>`<div class="sys-line">⭐ ${esc(t)}</div>`).join("");continue;}
+  h+=msgHTML(st);if(st._resp)h+=st._resp.map(r=>msgHTML({f:r[0],t:r[1]})).join("");}
+ body.innerHTML=h;renderPanel();body.scrollTop=body.scrollHeight;}
+function renderPanel(){const p=$("#chat-panel");const sc=cur;const st=sc.steps[S.step];
+ if(S.shown<S.step){p.innerHTML="";return;}
+ if(st&&st.choice){p.innerHTML=`<div class="panel"><div class="pt">💬 なおの返信を選ぶ</div>${st.choice.map((c,i)=>`<button class="choice" data-ci="${i}">${esc(c.t)}</button>`).join("")}</div>`;
+  p.querySelectorAll("[data-ci]").forEach(b=>b.addEventListener("click",()=>pickChoice(+b.dataset.ci)));return;}
+ if(st&&st.mission){const sel=st._sel||[];p.innerHTML=`<div class="panel"><div class="pt">⭐ サポート配分ミッション ― ${st.mission.pick}つ選んでね（あと${st.mission.pick-sel.length}つ）</div>${st.mission.opts.map((o,i)=>`<button class="miss ${sel.includes(i)?"sel":""}" data-mi="${i}"><span class="box">${sel.includes(i)?"✓":""}</span><span><b>${esc(o.t)}</b><small>${esc(o.s)}</small></span></button>`).join("")}<button class="bigbtn" id="miss-go" ${sel.length===st.mission.pick?"":"disabled"}>これで進める</button></div>`;
+  p.querySelectorAll("[data-mi]").forEach(b=>b.addEventListener("click",()=>toggleMiss(+b.dataset.mi)));
+  const go=$("#miss-go");if(go)go.addEventListener("click",confirmMiss);return;}
+ p.innerHTML="";}
+function advance(){if(busy)return;const sc=cur;if(!sc)return;const st=sc.steps[S.step];
+ if(st&&(st.choice||st.mission)&&S.shown>=S.step){return;}
+ if(S.step>=sc.steps.length){finishScene();return;}
+ /* typing effect */
+ busy=true;const body=$("#chat-body");const stp=sc.steps[S.step];
+ if(stp&&!stp.choice&&!stp.mission&&!stp.me&&!stp.sys&&!stp.day&&stp.f){const tp=document.createElement("div");tp.className="msg";tp.id="tp-row";tp.innerHTML=avHTML(stp.f,38)+`<div class="col"><div class="who">${M[stp.f].n}</div><span class="typing"><i></i><i></i><i></i></span></div>`;body.appendChild(tp);body.scrollTop=body.scrollHeight;}
+ setTimeout(()=>{const tp=$("#tp-row");if(tp)tp.remove();S.step++;S.shown=Math.max(S.shown,S.step);save();busy=false;renderChat();
+  if(S.step>=sc.steps.length){/* wait one more tap */}
+ },stp&&stp.f?420:60);}
+$("#chat-next").addEventListener("click",advance);
+$("#chat-body").addEventListener("click",advance);
+function pickChoice(i){const sc=cur;const st=sc.steps[S.step];const c=st.choice[i];applyE(c.e);st._me=c.t;st._resp=c.r||[];S.step++;S.shown=Math.max(S.shown,S.step);save();renderChat();setTimeout(()=>{const b=$("#chat-body");b.scrollTop=b.scrollHeight;},50);}
+function toggleMiss(i){const st=cur.steps[S.step];st._sel=st._sel||[];const x=st._sel.indexOf(i);if(x>=0)st._sel.splice(x,1);else{if(st._sel.length>=st.mission.pick){toast("選べるのは"+st.mission.pick+"つまで");return;}st._sel.push(i);}renderPanel();}
+function confirmMiss(){const st=cur.steps[S.step];let notes=[];st._sel.forEach(i=>{const o=st.mission.opts[i];applyE(o.e);notes.push(o.note);});st._sysResp=notes;S.step++;S.shown=Math.max(S.shown,S.step);save();renderChat();const b=$("#chat-body");b.scrollTop=b.scrollHeight;}
+function finishScene(){const sc=cur;if(sc.memo&&!S.memos.includes(sc.id)){S.memos.push(sc.id);}if(sc.ig)S.ig=Math.max(S.ig,sc.ig);if(sc.tt)S.tt=Math.max(S.tt,sc.tt);if(sc.photo)S.photosMax=Math.max(S.photosMax,sc.photo);S.scene++;S.step=0;S.shown=0;save();cur=null;
+ if(S.scene>=SCENES.length){doEnding();return;}
+ toast("「"+SCENES[S.scene].title+"」が届いたよ");show("line");}
+/* ============ CALL ============ */
+let callTimer=null,callSec=0,callScene=null,callLine=0;
+function startCall(sc){callScene=sc;callLine=0;const who=sc.call.who;$("#call-av").src=M[who].av;$("#call-name").textContent=M[who].n;$("#call-status").textContent="着信中…";$("#call-sub").textContent="";$("#call-btns").style.display="flex";$("#call-grid").style.display="none";$("#call-end").style.display="none";show("call");}
+$("#call-acc").addEventListener("click",()=>{callSec=0;$("#call-status").textContent="00:00";$("#call-btns").style.display="none";$("#call-grid").style.display="grid";$("#call-end").style.display="block";$("#call-sub").textContent="タップで会話が進むよ";callTimer=setInterval(()=>{callSec++;$("#call-status").textContent=String(Math.floor(callSec/60)).padStart(2,"0")+":"+String(callSec%60).padStart(2,"0");},1000);});
+$("#call-dec").addEventListener("click",()=>{toast("かけ直してきたよ（応答してね）");});
+$("#call-end").addEventListener("click",()=>{const lines=callScene.call.lines;if(callLine<lines.length){$("#call-sub").textContent="「"+lines[callLine]+"」";callLine++;return;}clearInterval(callTimer);S.callDone=true;save();openChat(callScene);});
+$("#call-hang").addEventListener("click",ev=>{ev.stopPropagation();});
+/* ============ ENDING ============ */
+function doEnding(){const g=S.gauges;let id="warm";if(g.comp>=80&&g.cond>=70&&g.trust>=76)id="perfect";else if(g.comp<62||g.cond<50||g.trust<60)id="bitter";S.ended=true;S.endId=id;const eg=endingsGot();eg[id]=true;try{localStorage.setItem(EKEY,JSON.stringify(eg));}catch(e){}
+ if(SCENES[SCENES.length-1].memo&&!S.memos.includes(SCENES[SCENES.length-1].id))S.memos.push(SCENES[SCENES.length-1].id);S.ig=4;S.tt=3;S.photosMax=6;save();
+ const E=ENDINGS[id];$("#end-title").textContent=E.t;$("#end-text").textContent=E.tx;$("#end-bg").src=E.bg;$("#end-gauges").innerHTML="最終ゲージ ― 公演完成度 "+g.comp+" ／ コンディション "+g.cond+" ／ 信頼度 "+g.trust;show("ending");}
+$("#end-home").addEventListener("click",()=>show("home"));
+/* ============ IG ============ */
+function renderIG(){const el=$("#ig-body");const posts=IG_POSTS.slice(0,S.ig);
+ let h=`<div class="stories">${Object.keys(M).filter(k=>M[k].av).map(k=>`<button class="story" data-story="${k}"><span class="ring ${S.ig>0?"":"seen"}"><img src="${M[k].av}"></span>${M[k].n}</button>`).join("")}<button class="story" data-story="me"><span class="ring seen"><span style="width:100%;height:100%;border-radius:50%;background:#06c755;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;border:2.5px solid #fff">N</span></span>あなた</button></div>`;
+ h+=`<div class="ig-prof"><div class="ig-top"><span class="ring"><img src="assets/group.jpg"></span><div class="ig-stats"><div><b>4</b><span>投稿</span></div><div><b>486万</b><span>フォロワー</span></div><div><b>12</b><span>フォロー中</span></div></div></div>
+ <div class="ig-bio"><b>nctwish_official</b> ✔<br>NCT WISH 公式アカウント<br>2nd TOUR『INTO THE WISH : Face Our WISH』開催中💫<br><span class="lnk">nctwish.jp/tour2027</span></div>
+ <div class="ig-btns"><button class="fol">フォロー中</button><button id="ig-msg">メッセージ</button><button style="flex:none;padding:7px 11px">👤＋</button></div></div>`;
+ if(S.viewIG==="grid"||!S.viewIG){h+=`<div class="ig-tabs"><button class="on">▦</button><button id="ig-t-feed">🎬</button><button>👤</button></div><div class="ig-grid">${posts.length?posts.map(p=>`<button data-post="${p.id}"><img src="${p.img}"><span class="pin">📌</span></button>`).join(""):`<div class="ig-lock">🔒 物語を進めると公式投稿が解放されるよ</div>`}</div>`;}
+ else{h+=`<div class="ig-tabs"><button id="ig-t-grid">▦</button><button class="on">🎬</button><button>👤</button></div>`+posts.map(p=>postHTML(p)).join("");}
+ el.innerHTML=h;
+ const gf=$("#ig-t-feed");if(gf)gf.addEventListener("click",()=>{S.viewIG="feed";save();renderIG();});
+ const gg=$("#ig-t-grid");if(gg)gg.addEventListener("click",()=>{S.viewIG="grid";save();renderIG();});
+ const ms=$("#ig-msg");if(ms)ms.addEventListener("click",()=>show("line"));
+ el.querySelectorAll("[data-post]").forEach(b=>b.addEventListener("click",()=>{S.viewIG="feed";save();renderIG();setTimeout(()=>{const t=document.getElementById("igpost-"+b.dataset.post);if(t)t.scrollIntoView();},60);}));
+ el.querySelectorAll("[data-story]").forEach(b=>b.addEventListener("click",()=>toast("ストーリーズは本編の進行に合わせて更新されるよ")));
+ bindPostActs(el);}
+function postHTML(p){const liked=S.likedIG[p.id];return `<div class="post" id="igpost-${p.id}"><div class="post-h"><span class="ring"><img src="assets/group.jpg"></span><span><b>${p.user}</b> ✔<div class="loc">${p.loc}</div></span><span class="dots">•••</span></div>
+ <div class="post-img" data-dbl="${p.id}"><img src="${p.img}"><span class="big-heart" id="bh-${p.id}">🤍</span></div>
+ <div class="post-act"><button class="hrt ${liked?"liked":""}" data-like="${p.id}">${liked?"❤️":"🤍"}</button><button>💬</button><button>✈️</button><button class="save">🔖</button></div>
+ <div class="post-likes">いいね！${p.likes}件</div><div class="post-cap"><b>${p.user}</b>${esc(p.cap)}</div>
+ ${p.cm.map(c=>`<div class="post-cmt"><b>${c[0]}</b> ${esc(c[1])}</div>`).join("")}
+ <div class="post-time">${p.time}</div></div>`;}
+function bindPostActs(root){root.querySelectorAll("[data-like]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.like;S.likedIG[id]=!S.likedIG[id];save();renderIG();}));
+ root.querySelectorAll("[data-dbl]").forEach(d=>d.addEventListener("dblclick",()=>{const id=d.dataset.dbl;const bh=document.getElementById("bh-"+id);if(bh){bh.classList.remove("pop");void bh.offsetWidth;bh.classList.add("pop");}if(!S.likedIG[id]){S.likedIG[id]=true;save();setTimeout(renderIG,650);}}));}
+/* ============ TIKTOK ============ */
+function renderTT(){const el=$("#tt-feed");const posts=TT_POSTS.slice(0,S.tt);
+ if(!posts.length){el.innerHTML=`<div style="padding:120px 30px;text-align:center;color:#bbb;font-size:13px;line-height:1.8">🔒 まだ投稿がないよ<br>物語を進めると公式TikTokが解放される</div>`;return;}
+ el.innerHTML=posts.map((p,i)=>{const liked=S.likedTT[i];return `<div class="tt-item"><img class="bg" src="${p.img}"><div class="grad"></div>
+ <div class="tt-top"><span>フォロー中</span><span class="on">おすすめ</span><span class="srch">🔍</span></div>
+ <div class="tt-play" id="ttp-${i}">▶</div>
+ <div class="tt-rail"><span style="position:relative;display:flex;flex-direction:column;align-items:center"><img class="tav" src="assets/group.jpg"><span class="plus">＋</span></span>
+ <button class="rb" data-ttlike="${i}"><span class="ric ${liked?"liked":""}">❤️</span>${p.likes}</button>
+ <button class="rb" data-ttc="${i}"><span class="ric">💬</span>${p.cmN}</button>
+ <button class="rb"><span class="ric">↗️</span>${p.sh}</button>
+ <span class="tt-disc"><img src="assets/group.jpg"></span></div>
+ <div class="tt-info"><div class="at">${p.at} ✔</div><div class="cap">${esc(p.cap)}</div>
+ <div class="tt-music"><span>♪</span><span class="marq"><span>${esc(p.music)}　・　${esc(p.music)}　・　</span></span></div></div>
+ <div class="tt-prog"><i id="ttpg-${i}"></i></div></div>`;}).join("");
+ el.querySelectorAll("[data-ttlike]").forEach(b=>b.addEventListener("click",()=>{const i=b.dataset.ttlike;S.likedTT[i]=!S.likedTT[i];save();renderTT();}));
+ el.querySelectorAll("[data-ttc]").forEach(b=>b.addEventListener("click",()=>toast("コメントは各国語で大盛り上がり中（本編の進行とは連動しないよ）")));
+ el.querySelectorAll(".tt-item").forEach((it,i)=>{it.addEventListener("click",ev=>{if(ev.target.closest(".rb"))return;const pl=document.getElementById("ttp-"+i);pl.classList.add("show");setTimeout(()=>pl.classList.remove("show"),450);const pg=document.getElementById("ttpg-"+i);let w=parseFloat(pg.style.width||"0");w=w>=100?0:w+25;pg.style.transition="width .4s";pg.style.width=w+"%";});});}
+/* ============ CALENDAR ============ */
+function calMonth(y,m,events){const first=new Date(y,m-1,1).getDay(),days=new Date(y,m,0).getDate();let cells=["日","月","火","水","木","金","土"].map(d=>`<div class="dw">${d}</div>`).join("");for(let i=0;i<first;i++)cells+=`<div class="cd dim"></div>`;for(let d=1;d<=days;d++){const ev=events[d];cells+=`<div class="cd ${y===2027&&m===3&&d===7?"today":""}"><b>${d}</b>${ev?ev.map(e=>`<span class="ev ${e[1]}">${e[0]}</span>`).join(""):""}</div>`;}return `<div class="cal-grid">${cells}</div>`;}
+function renderCal(){$("#cal-wrap").innerHTML=`
+ <div class="cal-m">2027年2月 <span>INTO THE WISH : Face Our WISH 日本公演</span></div>
+ ${calMonth(2027,2,{24:[["帯同決定","ev-b"]],25:[["代々木リハ","ev-r"]],26:[["代々木DAY1","ev-p"]],27:[["代々木DAY2","ev-p"]],28:[["代々木DAY3","ev-p"]]})}
+ <div class="cal-m">2027年3月 <span>神戸→福岡→愛知へ</span></div>
+ ${calMonth(2027,3,{4:[["神戸入り","ev-b"]],5:[["神戸DAY1","ev-p"]],6:[["神戸DAY2","ev-p"]],7:[["神戸DAY3","ev-p"]],13:[["福岡DAY1","ev-g"]],14:[["福岡DAY2","ev-g"]],21:[["愛知DAY1","ev-g"]],22:[["愛知DAY2","ev-g"]]})}
+ <div class="cal-legend">📌 史実メモ：ツアー開幕は2027年1月ソウル・高尺スカイドーム。2026年12月5日にはUSJ「Winter Special Live」にも出演した。</div>
+ <div style="margin-top:8px">
+ ${[[24,2,"帯同決定","マネージャー田村から正式連絡"],[26,2,"東京公演 DAY1〜3（2/26-28）","国立代々木競技場第一体育館・全日完売"],[4,3,"神戸入り","新幹線移動／神戸牛の夕食"],[5,3,"神戸公演 DAY1〜3（3/5-7）","GLION ARENA KOBE・全日完売"],[13,3,"福岡公演（3/13-14）","北九州メッセ ― 物語の続きの地"],[21,3,"愛知公演（3/21-22）","ポートメッセなごや"]].map(x=>`<div class="cal-item"><span class="dt"><b>${x[0]}</b><span>${x[1]}月</span></span><span><b>${x[2]}</b><br><span style="color:#888;font-size:12px">${x[3]}</span></span></div>`).join("")}
+ </div>`;}
+/* ============ NOTES ============ */
+function renderNotes(){const el=$("#notes-body");const eg=endingsGot();let h=S.memos.length?S.memos.map(id=>{const sc=SCENES.find(s=>s.id===id);return `<div class="note-item"><div class="nt">${esc(sc.memo.t)}<span>${esc(sc.date)}</span></div><p>${esc(sc.memo.b)}</p></div>`;}).join(""):`<div class="note-lock">🔒 帯同メモはまだないよ。物語を進めると観察記録が貯まっていく</div>`;
+ h+=`<div class="sec-t" style="padding-left:16px">エンディングコレクション</div><div class="end-coll">${Object.keys(ENDINGS).map(k=>{const got=eg[k];return `<div class="end-card ${got?"":"lock"}" style="${got?"background:linear-gradient(135deg,#7b61c9,#4fc3e8)":""}"><b>${got?ENDINGS[k].t:"？？？（未到達）"}</b>${got?"到達済み ✓":"ゲージの配分を変えて再挑戦すると別の結末が見られるよ"}</div>`;}).join("")}</div>`;
+ el.innerHTML=h;}
+/* ============ PHOTOS ============ */
+function renderPhotos(){const el=$("#ph-grid");const unlocked=PHOTOS.filter(p=>S.scene>p.unlock||S.ended||p.unlock===0);$("#ph-count").textContent=unlocked.length+" / "+PHOTOS.length+" 枚";
+ el.innerHTML=PHOTOS.map((p,i)=>{const un=S.scene>p.unlock||S.ended||p.unlock===0;return `<button data-ph="${i}">${un?`<img src="${p.img}">`:`<span class="lk">🔒</span>`}</button>`;}).join("");
+ el.querySelectorAll("[data-ph]").forEach(b=>b.addEventListener("click",()=>{const p=PHOTOS[+b.dataset.ph];if(!(S.scene>p.unlock||S.ended||p.unlock===0)){toast("物語を進めると解放されるよ");return;}$("#pv-img").src=p.img;$("#pv-cap").textContent=p.cap;$("#pv-title").textContent="写真";show("photoview");}));}
+/* ============ FREE CHAT ============ */
+function openFree(){show("free");const b=$("#free-body");if(!b.dataset.init){b.innerHTML=`<div class="day-pill"><span>ツアー帯同クリア後 ― フリーチャット</span></div>`+msgHTML({f:"sakuya",t:"なおさん、お疲れさまです。……少しだけ、話せますか"});b.dataset.init="1";}}
+function freeSend(){const inp=$("#free-input");const v=inp.value.trim();if(!v)return;inp.value="";const b=$("#free-body");b.innerHTML+=msgHTML({me:true,t:v});let r=null;for(const f of FREE){if(f.k.some(k=>v.includes(k))){r=f.r;break;}}if(!r)r=FREE_DEFAULT[S.freeCount%FREE_DEFAULT.length];S.freeCount++;save();const tp=document.createElement("div");tp.className="msg";tp.innerHTML=avHTML("sakuya",38)+`<div class="col"><div class="who">サクヤ</div><span class="typing"><i></i><i></i><i></i></span></div>`;b.appendChild(tp);b.scrollTop=b.scrollHeight;setTimeout(()=>{tp.remove();b.innerHTML+=msgHTML({f:"sakuya",t:r});b.scrollTop=b.scrollHeight;},650);}
+$("#free-send").addEventListener("click",freeSend);
+$("#free-input").addEventListener("keydown",e=>{if(e.key==="Enter")freeSend();});
+/* init */
+renderGauges();save();
+</script>
+</body>
+</html>
