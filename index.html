@@ -113,7 +113,7 @@ img{user-select:none;-webkit-user-drag:none}
 .thread .tt{flex:1;min-width:0}
 .thread .tn{font-size:14.5px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}
 .thread .tn time{font-size:10.5px;color:var(--sub);font-weight:400;flex:none;margin-left:8px}
-.thread .tp{font-size:12.5px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.thread .tp{display:block;font-size:12.5px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;max-width:100%}
 .thread .ub{background:var(--red);color:#fff;font-size:11px;font-weight:700;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex:none}
 .thread .done{font-size:11px;color:var(--wish);font-weight:700;flex:none}
 .ll-tabs{flex:none;display:flex;border-top:1px solid var(--line);background:rgba(250,250,252,.96);padding:7px 6px 20px}
@@ -264,7 +264,7 @@ img{user-select:none;-webkit-user-drag:none}
 .cd{aspect-ratio:.86;border-radius:9px;background:#f6f6f9;font-size:12px;padding:4px 3px;position:relative;color:#333;overflow:hidden}
 .cd.dim{background:transparent;color:#c6c6cc}
 .cd.today{background:#111;color:#fff;font-weight:800}
-.cd .ev{font-size:8px;line-height:1.3;border-radius:3px;padding:1px 2px;margin-top:2px;color:#fff;font-weight:700;display:block}
+.cd .ev{font-size:7.6px;letter-spacing:-.02em;line-height:1.3;border-radius:3px;padding:1px 2px;margin-top:2px;color:#fff;font-weight:700;display:block}
 .ev-p{background:var(--wish)}.ev-r{background:#ff9500}.ev-b{background:#0a84ff}.ev-g{background:#34c759}
 .cal-legend{font-size:11px;color:#666;line-height:1.9;margin-top:10px}
 .cal-item{display:flex;gap:10px;padding:10px 2px;border-bottom:1px solid #f0f0f3;font-size:13px;line-height:1.55}
@@ -322,6 +322,175 @@ img{user-select:none;-webkit-user-drag:none}
 .toast.show{opacity:1;transform:translateX(-50%)}
 .set-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #f0f0f3;font-size:14px;width:100%;text-align:left;background:#fff}
 .set-row span{color:var(--sub);font-size:12px}
+
+/* ================= v2: iPhone 17 Pro + iOS 26 Liquid Glass ================= */
+:root{--glass:rgba(255,255,255,.16);--glass-brd:rgba(255,255,255,.38);--spring:cubic-bezier(.32,1.4,.36,1)}
+body{background:radial-gradient(1200px 760px at 18% -5%,#3d3560 0%,#191527 52%,#08070f 100%)}
+/* titanium frame, thinner bezel */
+.phone{width:min(412px,100vw);height:min(874px,calc(100dvh - 112px));border-radius:60px;padding:9px;
+ background:linear-gradient(155deg,#c9ccd4 0%,#7d818c 18%,#3f4249 42%,#8b8f99 68%,#2c2e34 100%);
+ box-shadow:0 0 0 1.5px rgba(255,255,255,.35),0 0 0 3.5px #17181d,0 34px 80px rgba(0,0,0,.75),inset 0 0 4px rgba(255,255,255,.5)}
+.phone::before{left:-3px;top:212px;height:96px;background:linear-gradient(90deg,#5a5d64,#9a9ea8);border-radius:2.5px}
+.phone::after{right:-3px;top:238px;height:132px;background:linear-gradient(90deg,#9a9ea8,#5a5d64);border-radius:2.5px}
+.phone .action-btn{position:absolute;left:-3px;top:128px;width:3.5px;height:52px;border-radius:2.5px;background:linear-gradient(90deg,#5a5d64,#a8acb6);z-index:5}
+.screen{border-radius:51px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+@media(max-width:430px){.phone{border-radius:0;padding:0;height:calc(100dvh - 92px);background:#000;box-shadow:none}.phone .action-btn{display:none}.screen{border-radius:0}}
+.island{top:10px;width:118px;height:31px;border-radius:21px;box-shadow:inset 0 0 3px rgba(120,170,255,.25),0 0 0 .5px rgba(255,255,255,.06)}
+.statusbar{height:52px;font-size:15.5px;letter-spacing:.01em}
+.homebar{width:140px;height:5.5px;border-radius:3px;background:rgba(255,255,255,.95)}
+/* view transitions: spring zoom like opening apps */
+.view{animation:vin .38s var(--spring)}
+@keyframes vin{from{opacity:0;transform:scale(1.045) translateY(6px)}to{opacity:1;transform:none}}
+button{transition:transform .16s var(--spring)}
+button:active{transform:scale(.965)}
+/* glass surfaces */
+.wid,.wid-wide,.dock,.lnotif,.lk-btn,.toast,#v-ending .gs,.call-grid .cb i{
+ border:1px solid var(--glass-brd);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -8px 18px rgba(255,255,255,.05),0 10px 28px rgba(5,3,18,.35)}
+.wid-count{background:linear-gradient(150deg,rgba(64,52,120,.55),rgba(24,18,52,.62));backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7)}
+.wid-wide{background:linear-gradient(160deg,rgba(255,255,255,.78),rgba(255,255,255,.62));backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8)}
+.dock{background:linear-gradient(165deg,rgba(255,255,255,.34),rgba(255,255,255,.14));backdrop-filter:blur(26px) saturate(1.9);-webkit-backdrop-filter:blur(26px) saturate(1.9);border-radius:32px}
+.lnotif{background:linear-gradient(160deg,rgba(70,70,84,.5),rgba(30,30,40,.55));backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border-radius:24px}
+.lk-btn{background:linear-gradient(160deg,rgba(90,90,105,.5),rgba(30,30,40,.5));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.toast{background:linear-gradient(160deg,rgba(46,44,64,.82),rgba(18,16,30,.88));backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5)}
+/* lock screen: glass clock + slow zoom wallpaper */
+#v-lock .wallbg{animation:kb 26s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09) translateY(-6px)}}
+.lock-time{font-weight:170;text-shadow:0 2px 26px rgba(0,0,0,.4),0 0 2px rgba(255,255,255,.35)}
+.lock-date{text-shadow:0 1px 10px rgba(0,0,0,.45)}
+/* app icons: glossy squircle */
+.app .ic{border-radius:15.5px;box-shadow:0 5px 14px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.5)}
+.app .ic::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(168deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.06) 42%,rgba(255,255,255,0) 60%);pointer-events:none}
+.app span:last-child{font-weight:500}
+/* app headers: frosted glass bars */
+.ahead,.ll-head{background:rgba(255,255,255,.82);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-bottom:1px solid rgba(60,60,80,.09)}
+.ahead h2{font-size:17px;letter-spacing:.01em}
+.ll-head h2{font-size:23px;font-weight:800;letter-spacing:-.01em}
+.ll-tabs{background:rgba(252,252,254,.86);backdrop-filter:blur(20px) saturate(1.7);-webkit-backdrop-filter:blur(20px) saturate(1.7)}
+/* chat: iOS26-ish bubbles/panels */
+.bub{border-radius:19px;border-top-left-radius:5px;box-shadow:0 1px 2px rgba(20,16,40,.09);overflow-wrap:anywhere}
+.msg.me .bub{border-radius:19px;border-top-right-radius:5px}
+.bub.imgb img{width:230px;animation:imgz 9s ease-in-out infinite alternate}
+@keyframes imgz{from{transform:scale(1)}to{transform:scale(1.05)}}
+.sys-line{overflow-wrap:anywhere;backdrop-filter:blur(4px)}
+.panel{background:rgba(255,255,255,.88);backdrop-filter:blur(20px) saturate(1.7);-webkit-backdrop-filter:blur(20px) saturate(1.7);border-top:1px solid rgba(60,60,80,.1);border-radius:22px 22px 0 0;box-shadow:0 -8px 26px rgba(20,14,50,.12)}
+.choice{border-radius:16px;background:linear-gradient(160deg,rgba(226,246,205,.95),rgba(205,238,180,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.miss{border-radius:16px;background:linear-gradient(160deg,rgba(243,239,255,.96),rgba(230,222,253,.92));box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.miss small,.miss b{overflow-wrap:anywhere}
+.bigbtn{border-radius:16px;box-shadow:0 6px 16px rgba(90,64,190,.35),inset 0 1px 0 rgba(255,255,255,.35)}
+/* IG / TT polish */
+.post-cap,.post-cmt{overflow-wrap:anywhere}
+.ig-grid button img{transition:transform .35s var(--spring)}
+.stories .ring{box-shadow:0 3px 10px rgba(190,40,110,.3)}
+.tt-item{overflow:hidden}
+.tt-info{max-width:calc(100% - 88px)}
+.tt-info .cap{overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.tt-rail .rb{text-shadow:0 1px 4px rgba(0,0,0,.65)}
+/* calendar / notes glass cards */
+.cd{min-width:0}
+.cd .ev{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-item{border-radius:17px;box-shadow:0 6px 18px rgba(80,64,10,.08),inset 0 1px 0 rgba(255,255,255,.8)}
+.note-item .nt{flex-wrap:wrap;gap:4px}
+.end-card{border-radius:18px}
+/* call: iOS 26 unified call UI */
+#v-call{background:linear-gradient(175deg,rgba(52,44,88,.92),rgba(10,8,22,.97));backdrop-filter:blur(10px)}
+#v-call .cav{box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 6px rgba(255,255,255,.1)}
+.call-grid .cb i{background:linear-gradient(160deg,rgba(255,255,255,.24),rgba(255,255,255,.1));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#v-call .csub{overflow-wrap:anywhere}
+/* ending: full photo + glass card */
+#v-ending .wallbg{animation:kb 24s ease-in-out infinite alternate}
+#v-ending .ec{padding-top:110px}
+#v-ending h3{font-size:27px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+#v-ending .gs{background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.1));backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-radius:20px}
+/* horizontal-overflow hard guards */
+.screen{overflow:hidden}
+.view{overflow-x:hidden}
+.abody,.chat-body,.home-scroll{overflow-x:hidden}
+img{max-width:100%}
+.thread .tn span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-m{flex-wrap:wrap;gap:2px 8px}
+.pv-cap,.ig-bio,.locknote{overflow-wrap:anywhere}
+
+
+/* ================= v2.1 real-device details ================= */
+.fic{font-size:19px;color:#555;flex:none}
+.msg .tm{transition:opacity .3s}
+.msg.me .rd{transition:opacity .5s}
+/* notification banner */
+#nbanner{position:absolute;top:56px;left:10px;right:10px;z-index:330;display:flex;gap:10px;align-items:flex-start;text-align:left;padding:12px 14px;border-radius:26px;color:#fff;background:linear-gradient(160deg,rgba(64,62,84,.72),rgba(24,22,38,.78));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border:1px solid rgba(255,255,255,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 16px 34px rgba(0,0,0,.4);transform:translateY(-150%);opacity:0;transition:transform .55s cubic-bezier(.32,1.35,.36,1),opacity .3s}
+#nbanner.show{transform:none;opacity:1}
+#nbanner .nb-ic{width:34px;height:34px;border-radius:9px;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}
+#nbanner .nb-tx{flex:1;min-width:0}
+#nbanner .nb-h{display:flex;justify-content:space-between;font-size:11px;color:#d9d9e2;text-transform:uppercase;letter-spacing:.04em}
+#nbanner .nb-h span{text-transform:none}
+#nbanner .nb-b{display:block;font-size:13px;line-height:1.5;margin-top:2px;overflow-wrap:anywhere}
+/* lock stack */
+.lnotif.stack{margin:-4px 7px 0;transform:scale(.965);opacity:.72;padding:8px 13px}
+/* profile */
+#v-profile{background:#111;color:#fff;overflow:hidden}
+.prof-cover{position:absolute;inset:0;width:100%;height:58%;object-fit:cover;filter:blur(1px) brightness(.85)}
+.prof-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,0) 30%,rgba(10,10,14,.88) 62%,#0a0a0e)}
+.prof-back{position:absolute;top:56px;left:10px;z-index:3;font-size:27px;color:#fff;background:rgba(0,0,0,.3);width:36px;height:36px;border-radius:50%;backdrop-filter:blur(8px)}
+.prof-main{position:relative;margin-top:auto;padding:0 26px 64px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.prof-avwrap{position:relative;width:96px;height:96px}
+.prof-av{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.85);box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.prof-av.sil{position:absolute;inset:0}
+.prof-name{font-size:22px;font-weight:800;margin-top:13px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.prof-status{font-size:13.5px;color:#e6e4f2;line-height:1.65;margin-top:6px;overflow-wrap:anywhere}
+.prof-btns{display:flex;gap:10px;margin-top:20px}
+.prof-btns .pb{padding:10px 20px;border-radius:20px;background:rgba(255,255,255,.18);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:13.5px;font-weight:700}
+.prof-btns .pb.main{background:#06c755;border-color:transparent}
+/* story */
+#v-story{background:#000;color:#fff;z-index:120}
+.story-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.story-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42),transparent 22%,transparent 78%,rgba(0,0,0,.5))}
+.story-top{position:absolute;top:52px;left:10px;right:10px;z-index:3}
+.story-segs{display:flex;gap:4px}
+.story-segs i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden;display:block}
+.story-segs i b{display:block;height:100%;width:0;background:#fff;border-radius:2px}
+.story-segs i.done b{width:100%}
+.story-head{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;font-weight:700}
+.story-head img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.7)}
+.story-head #story-time{color:#cfcfe0;font-weight:400;font-size:12.5px}
+.story-head #story-x{margin-left:auto;font-size:19px;color:#fff;padding:4px 8px}
+.story-foot{position:absolute;left:12px;right:12px;bottom:30px;z-index:3;display:flex;gap:12px;align-items:center}
+.story-reply{flex:1;border:1.5px solid rgba(255,255,255,.65);border-radius:22px;padding:10px 15px;font-size:13.5px;color:#eee;background:rgba(0,0,0,.18);backdrop-filter:blur(6px)}
+.story-ic{font-size:24px}
+.story-zone{position:absolute;top:0;bottom:0;width:32%;z-index:2}
+.story-zone.l{left:0}.story-zone.r{right:0}
+/* comment sheet */
+#sheet{position:absolute;inset:0;z-index:340;background:rgba(8,6,16,.45);display:none;align-items:flex-end}
+#sheet.on{display:flex}
+.sheet-card{background:rgba(255,255,255,.97);color:#111;width:100%;max-height:72%;border-radius:24px 24px 0 0;display:flex;flex-direction:column;animation:sheetup .38s cubic-bezier(.32,1.3,.36,1)}
+@keyframes sheetup{from{transform:translateY(60px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-grip{width:38px;height:4.5px;border-radius:3px;background:#d5d5dc;margin:9px auto 2px;flex:none}
+.sheet-head{position:relative;text-align:center;font-size:13.5px;font-weight:800;padding:7px 0 9px;border-bottom:1px solid #eee;flex:none}
+.sheet-head #sheet-x{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#8e8e93;background:#f0f0f4;width:27px;height:27px;border-radius:50%}
+.sheet-body{overflow-y:auto;padding:8px 16px;flex:1}
+.sheet-body .sc-row{display:flex;gap:9px;padding:8px 0;font-size:13px;line-height:1.55}
+.sheet-body .sc-row b{flex:none}
+.sheet-body .sc-row span{overflow-wrap:anywhere;color:#333}
+.sheet-in{display:flex;gap:8px;padding:10px 12px 26px;border-top:1px solid #eee;flex:none}
+.sheet-in input{flex:1;font-size:16px;border:1px solid #e0e0e6;border-radius:19px;padding:8px 13px;outline:none;color:#111;min-width:0}
+.sheet-in button{font-weight:800;color:#d62976;font-size:14px;padding:0 6px;flex:none}
+.cmt-more{display:block;font-size:12.5px;color:#8e8e93;padding:2px 0 6px;text-align:left}
+/* call slide */
+.call-mini{display:flex;justify-content:space-between;padding:0 74px;margin-top:auto;width:100%}
+.call-mini span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:19px;color:#e8e5f5}
+.call-mini small{font-size:10.5px;color:#bdb8d4}
+.call-btns{margin-top:22px}
+.slide{position:relative;width:196px;height:66px;border-radius:34px;background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(255,255,255,.14));border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(14px);display:flex;align-items:center;cursor:pointer;overflow:hidden}
+.slide .knob{position:absolute;left:4px;width:58px;height:58px;border-radius:50%;background:#34c759;color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px;box-shadow:0 4px 14px rgba(0,0,0,.35);animation:slidehint 1.8s ease-in-out infinite}
+@keyframes slidehint{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+.slide .slide-tx{margin-left:76px;font-size:12.5px;color:#fff;font-weight:600;white-space:nowrap}
+/* tiktok create */
+.tt-create{display:flex;width:44px;height:31px;border-radius:9px;background:linear-gradient(90deg,#25f4ee 0 22%,#fff 22% 78%,#fe2c55 78%);color:#111;align-items:center;justify-content:center;font-size:19px;font-weight:900;margin:0 auto}
+/* widget refraction */
+.wid{position:relative;overflow:hidden}
+.wid::after{content:'';position:absolute;inset:0;background:linear-gradient(118deg,rgba(255,255,255,.30),rgba(255,255,255,0) 40%);pointer-events:none}
+.app .bdg{top:-6px;right:2px}
+.app .ic{border-radius:16.5px}
+
 </style>
 </head>
 <body>
@@ -330,7 +499,7 @@ img{user-select:none;-webkit-user-drag:none}
 <p>NCT WISH 2ndツアー『INTO THE WISH : Face Our WISH』日本公演に、通訳兼アーティストサポートスタッフとして帯同するスマホ風SNSファンゲーム。</p>
 <p class="src">※これは実在の人物を題材にした創作フィクション（ファンメイド作品）です。実在の公演内容・発言とは関係ありません。日程・会場・リリース実績等の史実データは公開情報に基づきます。セットリスト等の未公表部分は創作です。</p>
 </div>
-<div class="phone"><div class="screen">
+<div class="phone"><span class="action-btn" aria-hidden="true"></span><div class="screen">
 <div class="island"></div>
 <div class="statusbar" id="statusbar"><span id="sb-time">9:41</span><span class="sb-r"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="16" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 9.6a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM8 5.4c1.7 0 3.3.66 4.5 1.86l-1.7 1.7A3.9 3.9 0 0 0 8 8.1c-1.06 0-2.05.3-2.8.86l-1.7-1.7A6.3 6.3 0 0 1 8 5.4zM8 1c2.9 0 5.7 1.14 7.8 3.2l-1.7 1.7A8.2 8.2 0 0 0 8 3.6c-2.2 0-4.3.84-5.9 2.3L.4 4.2A11 11 0 0 1 8 1z" transform="scale(0.95)"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="2" fill="currentColor"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="currentColor" opacity=".45"/></svg></span></div>
 <div class="homebar" id="homebar"></div>
@@ -344,6 +513,7 @@ img{user-select:none;-webkit-user-drag:none}
 <div class="lock-notifs">
 <button class="lnotif" data-go="line"><span class="ln-ic">💬</span><span style="flex:1"><span class="ln-h">LINE <span>今</span></span><span class="ln-t"><b>マネージャー田村</b>：なおさん、急ぎの連絡です。日本公演の帯同スタッフ、正式に決まりました</span></span></button>
 <button class="lnotif" data-go="line"><img src="assets/av-sakuya.jpeg" alt=""><span style="flex:1"><span class="ln-h">LINE <span>今</span></span><span class="ln-t"><b>WISH 帯同グループ</b>：代々木3日間、神戸3日間、チケットは両会場とも完売です。当日はよろしくお願いします！</span></span></button>
+<div class="lnotif stack"><span class="ln-ic" style="background:linear-gradient(45deg,#feda75,#d62976,#962fbf)">📸</span><span style="flex:1"><span class="ln-h">INSTAGRAM <span>2時間前</span></span><span class="ln-t"><b>nctwish_official</b> が新しい投稿をシェアしました</span></span></div>
 </div>
 <div class="lock-btns"><span class="lk-btn">🔦</span><span class="lk-btn">📷</span></div>
 <div class="lock-hint">タップしてロック解除</div>
@@ -394,7 +564,7 @@ img{user-select:none;-webkit-user-drag:none}
 <div class="chat-head"><button class="back" data-back="line">‹</button><h2 id="chat-title">トーク</h2><span class="hic">🔍</span><span class="hic">☰</span></div>
 <div class="chat-body" id="chat-body"></div>
 <div id="chat-panel"></div>
-<div class="chat-foot" id="chat-foot"><span class="plus">＋</span><div class="chat-in">メッセージを入力</div><span style="font-size:20px">😊</span><button class="send-b" id="chat-next">▶ 進む</button></div>
+<div class="chat-foot" id="chat-foot"><span class="plus">＋</span><span class="fic">📷</span><span class="fic">🖼️</span><div class="chat-in">メッセージを入力</div><span class="fic">😊</span><span class="fic">🎤</span><button class="send-b" id="chat-next">▶ 進む</button></div>
 </div>
 
 <!-- FREE CHAT -->
@@ -413,7 +583,7 @@ img{user-select:none;-webkit-user-drag:none}
 <!-- TIKTOK -->
 <div class="view" id="v-tt">
 <div class="tt-feed" id="tt-feed"></div>
-<div class="tt-tabs"><button>🏠<span>ホーム</span></button><button>🧭<span>発見</span></button><button class="mk">⊞</button><button>📥<span>受信箱</span></button><button class="on">👤<span>プロフィール</span></button></div>
+<div class="tt-tabs"><button class="on">🏠<span>ホーム</span></button><button>🧭<span>見つける</span></button><button class="mk"><span class="tt-create">＋</span></button><button>📥<span>受信箱</span></button><button>👤<span>プロフィール</span></button></div>
 </div>
 
 <!-- CALENDAR -->
@@ -447,7 +617,7 @@ img{user-select:none;-webkit-user-drag:none}
 <div class="call-grid" id="call-grid" style="display:none">
 <div class="cb"><i>🔇</i>消音</div><div class="cb"><i>⌨️</i>キーパッド</div><div class="cb"><i>🔊</i>スピーカー</div>
 <div class="cb"><i>➕</i>追加</div><div class="cb"><i>📹</i>FaceTime</div><div class="cb"><i>👤</i>連絡先</div></div>
-<div class="call-btns" id="call-btns"><button class="cbtn" id="call-dec"><i class="dec">📞</i>拒否</button><button class="cbtn" id="call-acc"><i class="acc">📞</i>応答</button></div>
+<div class="call-mini" id="call-mini"><span>🔔<small>リマインド</small></span><span>💬<small>メッセージ</small></span></div><div class="call-btns" id="call-btns"><button class="cbtn" id="call-dec"><i class="dec">📞</i>拒否</button><div class="slide" id="call-acc" role="button"><span class="knob">📞</span><span class="slide-tx">スライドで応答</span></div></div>
 <div class="call-end" id="call-end" style="display:none"><button id="call-hang"><i>📞</i></button><div style="font-size:11.5px;margin-top:5px">タップで次へ／終了</div></div>
 </div>
 
@@ -464,11 +634,41 @@ img{user-select:none;-webkit-user-drag:none}
 <div class="ahead"><button class="back" data-back="home">‹</button><h2>設定</h2></div>
 <div class="abody" style="background:#f2f2f7">
 <button class="set-row" id="set-reset">最初からプレイし直す <span>セーブ削除</span></button>
-<div class="set-row">バージョン <span>v1.0</span></div>
+<div class="set-row">バージョン <span>v2.0（iOS 26 / Liquid Glass）</span></div>
 <div class="set-row">ボイス <span>未収録（後付け可能な構造）</span></div>
 <div style="padding:16px;font-size:12px;color:#888;line-height:1.8">『推しのツアーに帯同する件』は実在の人物を題材にした創作フィクション（ファンメイド作品）です。登場人物の発言・公演演出・セットリスト等は創作であり、実在の内容とは関係ありません。日程・会場・リリース実績は公開されている史実に基づきます。<br>なおのアバターには本人の写真を使用していません（イニシャルアイコン）。<br>画像素材：KProfiles等のプロフィール写真、メディア掲載写真、公式系SNS掲載写真等（権利は各権利者に帰属します）。</div>
 </div>
 </div>
+
+
+<!-- PROFILE -->
+<div class="view" id="v-profile">
+<img class="prof-cover" id="prof-cover" alt="">
+<div class="prof-shade"></div>
+<button class="prof-back" data-back="line">‹</button>
+<div class="prof-main">
+<span class="prof-avwrap"><img class="prof-av" id="prof-av" alt=""><span class="prof-av sil" id="prof-avsil" style="display:none">N</span></span>
+<div class="prof-name" id="prof-name"></div>
+<div class="prof-status" id="prof-status"></div>
+<div class="prof-btns"><button class="pb main" id="prof-talk">💬 トーク</button><button class="pb" data-back="home">ホーム</button></div>
+</div>
+</div>
+
+<!-- STORY -->
+<div class="view" id="v-story">
+<img class="story-img" id="story-img" alt="">
+<div class="story-shade"></div>
+<div class="story-top"><div class="story-segs" id="story-segs"></div>
+<div class="story-head"><img id="story-av" alt=""><span id="story-name"></span><span id="story-time"></span><button id="story-x">✕</button></div></div>
+<div class="story-foot"><span class="story-reply">メッセージを送信…</span><span class="story-ic">♡</span><span class="story-ic">✈️</span></div>
+<button class="story-zone l" id="story-prev" aria-label="前へ"></button><button class="story-zone r" id="story-next" aria-label="次へ"></button>
+</div>
+
+<!-- COMMENT SHEET -->
+<div id="sheet"><div class="sheet-card"><div class="sheet-grip"></div><div class="sheet-head"><span id="sheet-head">コメント</span><button id="sheet-x" aria-label="閉じる">✕</button></div><div class="sheet-body" id="sheet-body"></div><div class="sheet-in"><input id="sheet-input" type="text" placeholder="コメントを追加…" autocomplete="off"><button id="sheet-send">投稿</button></div></div></div>
+
+<!-- NOTIFICATION BANNER -->
+<button id="nbanner"><span class="nb-ic" id="nb-ic">📸</span><span class="nb-tx"><span class="nb-h"><b id="nb-title">Instagram</b><span>今</span></span><span class="nb-b" id="nb-body"></span></span></button>
 
 <div class="toast" id="toast"></div>
 </div></div>
@@ -667,9 +867,9 @@ const IG_POSTS=[
  {id:4,img:"assets/stage2.jpg",user:"nctwish_official",loc:"GLION ARENA KOBE",likes:"2,458,913",cap:"KOBE FINAL DAY 💫 神戸の皆さんの声、ステージの端まで届いていました。ツアーはこのあと福岡・愛知へ続きます。また会いましょう！",cm:[["wish_archive","神戸お疲れさまでした😭"],["ryo_tonton","トントンも神戸に来られてよかった"]],time:"3月7日"}
 ];
 const TT_POSTS=[
- {img:"assets/stage2.jpg",at:"@nctwish_official",cap:"リハーサルの熱量、そのまま置いていきます💫 #NCTWISH #FaceOurWISH #代々木",music:"♪ 音源 - WISH (Original Sound)",likes:"184.2万",cmN:"8,412",sh:"3.1万"},
- {img:"assets/kobe.jpg",at:"@nctwish_official",cap:"神戸の海とアリーナ⚓ KOBE DAY1 スタート！ #NCTWISH #GLIONARENAKOBE #神戸",music:"♪ 音源 - poppop (NCT WISH)",likes:"213.7万",cmN:"1.2万",sh:"4.6万"},
- {img:"assets/av-sakuya.jpeg",at:"@nctwish_official",cap:"サクヤの言葉選びクイズ💭「今日来てくれた皆さん」派？ #SAKUYA #NCTWISH",music:"♪ 音源 - Hands Up (NCT WISH)",likes:"267.9万",cmN:"2.4万",sh:"6.8万"}
+ {img:"assets/stage2.jpg",at:"@nctwish_official",cap:"リハーサルの熱量、そのまま置いていきます💫 #NCTWISH #FaceOurWISH #代々木",music:"♪ 音源 - WISH (Original Sound)",likes:"184.2万",likesN:1842031,cmN:"8,412",sh:"3.1万"},
+ {img:"assets/kobe.jpg",at:"@nctwish_official",cap:"神戸の海とアリーナ⚓ KOBE DAY1 スタート！ #NCTWISH #GLIONARENAKOBE #神戸",music:"♪ 音源 - poppop (NCT WISH)",likes:"213.7万",likesN:2137048,cmN:"1.2万",sh:"4.6万"},
+ {img:"assets/av-sakuya.jpeg",at:"@nctwish_official",cap:"サクヤの言葉選びクイズ💭「今日来てくれた皆さん」派？ #SAKUYA #NCTWISH",music:"♪ 音源 - Hands Up (NCT WISH)",likes:"267.9万",likesN:2679512,cmN:"2.4万",sh:"6.8万"}
 ];
 const PHOTOS=[
  {img:"assets/group.jpg",cap:"ホーム画面の6人。2026年リリースラッシュを駆け抜けた、今のNCT WISH",unlock:0},
@@ -710,7 +910,7 @@ const FREE_DEFAULT=["うん、聞いてます","……そうですね。もう�
 /* ============ STATE ============ */
 const KEY="wishTour_v1", EKEY="wishTour_endings";
 let S;
-function defState(){return {scene:0,step:0,shown:0,gauges:{comp:50,cond:60,trust:45},memos:[],ig:0,tt:0,photosMax:0,ended:false,endId:"",callDone:false,freeCount:0,likedIG:{},likedTT:{},seenLock:true};}
+function defState(){return {scene:0,step:0,shown:0,gauges:{comp:50,cond:60,trust:45},memos:[],ig:0,tt:0,photosMax:0,ended:false,endId:"",callDone:false,freeCount:0,likedIG:{},likedTT:{},seenLock:true,following:true};}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&typeof j.scene==="number")return Object.assign(defState(),j);}catch(e){}return defState();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function endingsGot(){try{return JSON.parse(localStorage.getItem(EKEY))||{};}catch(e){return{};}}
@@ -718,8 +918,8 @@ S=load();
 /* ============ UTIL ============ */
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(el._h);el._h=setTimeout(()=>el.classList.remove("show"),2300);}
-function show(id){$$(".view").forEach(v=>v.classList.remove("on"));$("#v-"+id).classList.add("on");$("#statusbar").classList.toggle("dark",["line","ig","cal","notes","photos","set"].includes(id));window.scrollTo(0,0);if(id==="home")renderHome();if(id==="line")renderLineList();if(id==="ig")renderIG();if(id==="tt")renderTT();if(id==="cal")renderCal();if(id==="notes")renderNotes();if(id==="photos")renderPhotos();}
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function show(id){$$(".view").forEach(v=>v.classList.remove("on"));$("#v-"+id).classList.add("on");$("#statusbar").classList.toggle("dark",["line","ig","cal","notes","photos","set"].includes(id));window.scrollTo(0,0);if(id==="home")renderHome();if(id==="line")renderLineList();if(id==="ig")renderIG();if(id==="tt"){renderTT();setTimeout(startTTProg,60);}if(id==="cal")renderCal();if(id==="notes")renderNotes();if(id==="photos")renderPhotos();}
+function esc(s){if(s===undefined||s===null)return "";return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function avHTML(key,size,sq){const m=M[key];if(m&&m.av)return `<img class="${sq?"avsq":"av"}" src="${m.av}" style="width:${size}px;height:${size}px" alt="">`;return `<span class="sil" style="width:${size}px;height:${size}px;background:${m?m.c:"#999"};font-size:${Math.round(size*0.38)}px">${m?m.n[0]:"?"}</span>`;}
 function clamp(v){return Math.max(0,Math.min(100,v));}
 function applyE(e){if(!e)return;for(const k in e){S.gauges[k]=clamp(S.gauges[k]+e[k]);}renderGauges();}
@@ -749,12 +949,14 @@ function renderLineList(){const el=$("#line-list");let h=`<button class="me-row"
   let badge="",prev="",time="";
   if(S.ended&&tid==="sakuya"){badge=`<span class="ub" style="background:#c94f7c">FREE</span>`;prev="フリーチャット解放中（タップで話せる）";time="3月7日(日)";}
   else if(curSc&&curSc.thread===tid){badge=`<span class="ub">1</span>`;prev=curSc.title+" ― タップで開く";time=curSc.date;}
-  else if(lastDone){badge=`<span class="done">✓ 済</span>`;prev=lastDone.title+"（完了）";time=lastDone.date;}
+  else if(lastDone){badge=`<span class="done">✓ 済</span>`;prev=lastMsgText(lastDone);time=msgTimeStr(SCENES.indexOf(lastDone),lastDone.steps.length-1);}
   else{prev="（まだ届いていないトーク）";}
-  const av=th.av?`<img class="avsq" src="${th.av}" style="width:50px;height:50px" alt="">`:`<span class="sil" style="width:50px;height:50px;border-radius:38%;background:${th.c};font-size:18px">${th.ini}</span>`;
+  const av=th.av?`<img class="avsq" data-prof="${tid}" src="${th.av}" style="width:50px;height:50px" alt="">`:`<span class="sil" data-prof="${tid}" style="width:50px;height:50px;border-radius:38%;background:${th.c};font-size:18px">${th.ini}</span>`;
   h+=`<button class="thread" data-thread="${tid}">${av}<span class="tt"><span class="tn">${th.title}<time>${time}</time></span><span class="tp">${prev}</span></span>${badge}</button>`;});
  h+=`<div class="locknote">物語はトークを開くと進むよ。バッジのあるトークが現在の章。<br>友達とのトークは短め設計（本編優先）。</div>`;
  el.innerHTML=h;
+ el.querySelectorAll("[data-prof]").forEach(a=>a.addEventListener("click",ev=>{ev.stopPropagation();openProfile(a.dataset.prof);}));
+ const _mr=el.querySelector(".me-row");if(_mr)_mr.addEventListener("click",()=>openProfile("me"));
  el.querySelectorAll("[data-thread]").forEach(b=>b.addEventListener("click",()=>openThread(b.dataset.thread)));}
 function openThread(tid){
  if(S.ended&&tid==="sakuya"){openFree();return;}
@@ -766,19 +968,23 @@ function openThread(tid){
  openChat(sc);}
 /* ============ CHAT ENGINE ============ */
 let cur=null, busy=false;
-function openChat(sc){cur=sc;$("#chat-title").textContent=THREADS[sc.thread].title;show("chat");renderChat();}
-function msgHTML(st){
+function openChat(sc){cur=sc;const _ct=$("#chat-title");_ct.textContent=THREADS[sc.thread].title;_ct.onclick=()=>openProfile(sc.thread);show("chat");renderChat();}
+function msgHTML(st,tm){
+ tm=tm||nowTimeStr();
  if(st.day)return `<div class="day-pill"><span>${esc(st.day)}</span></div>`;
- if(st.sys)return `<div class="sys-line">${esc(st.t)}</div>`;
- if(st.me)return `<div class="msg me"><span class="tm"><span class="rd">既読</span>${"21:"+String(10+S.shown%40)}</span><div class="bub">${esc(st.t)}</div></div>`;
- const m=M[st.f];
- if(st.img)return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub imgb"><img src="${st.img}" alt=""></div>${st.cap?`<div class="bub" style="margin-top:4px">${esc(st.cap)}</div>`:""}</div><span class="tm">21:0${S.shown%9}</span></div>`;
- return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub">${esc(st.t)}</div></div><span class="tm">21:0${S.shown%9}</span></div>`;}
+ if(st.sys)return `<div class="sys-line">${esc(st.sys)}</div>`;
+ if(st.me)return `<div class="msg me"><span class="tm"><span class="rd">既読</span>${tm}</span><div class="bub">${esc(typeof st.me==="string"?st.me:st.t)}</div></div>`;
+ const m=M[st.f]||{n:"",av:"",c:"#999"};
+ if(st.img)return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub imgb"><img src="${st.img}" alt=""></div>${st.cap?`<div class="bub" style="margin-top:4px">${esc(st.cap)}</div>`:""}</div><span class="tm">${tm}</span></div>`;
+ return `<div class="msg">${avHTML(st.f,38)}<div class="col"><div class="who">${m.n}</div><div class="bub">${esc(st.t)}</div></div><span class="tm">${tm}</span></div>`;}
 function renderChat(){const body=$("#chat-body");const sc=cur;let h="";const n=Math.min(S.shown,sc.steps.length);
- for(let i=0;i<n;i++){const st=sc.steps[i];
-  if(st.choice||st.mission){if(st._me)h+=msgHTML({me:true,t:st._me});if(st._resp)h+=st._resp.map(r=>msgHTML({f:r[0],t:r[1]})).join("");if(st._sysResp)h+=st._sysResp.map(t=>`<div class="sys-line">⭐ ${esc(t)}</div>`).join("");continue;}
-  h+=msgHTML(st);if(st._resp)h+=st._resp.map(r=>msgHTML({f:r[0],t:r[1]})).join("");}
- body.innerHTML=h;renderPanel();body.scrollTop=body.scrollHeight;}
+ for(let i=0;i<n;i++){const st=sc.steps[i];const tm=msgTimeStr(SCENES.indexOf(sc),i);
+  if(st.choice||st.mission){if(st._me)h+=msgHTML({me:true,t:st._me},tm);if(st._resp)h+=st._resp.map((r,k)=>msgHTML({f:r[0],t:r[1]},msgTimeStr(SCENES.indexOf(sc),i,k+1))).join("");if(st._sysResp)h+=st._sysResp.map(t=>`<div class="sys-line">⭐ ${esc(t)}</div>`).join("");continue;}
+  h+=msgHTML(st,tm);if(st._resp)h+=st._resp.map((r,k)=>msgHTML({f:r[0],t:r[1]},msgTimeStr(SCENES.indexOf(sc),i,k+1))).join("");}
+ body.innerHTML=h;renderPanel();body.scrollTop=body.scrollHeight;
+ /* delayed read receipt: newest own message gets its 既読 a moment later */
+ const key=sc.id+":"+S.step+":"+S.shown;const mes=body.querySelectorAll(".msg.me .rd");
+ if(mes.length&&window._rdKey!==key){window._rdKey=key;const last=mes[mes.length-1];last.style.opacity="0";setTimeout(()=>{last.style.opacity="1";},1150+Math.random()*650);}}
 function renderPanel(){const p=$("#chat-panel");const sc=cur;const st=sc.steps[S.step];
  if(S.shown<S.step){p.innerHTML="";return;}
  if(st&&st.choice){p.innerHTML=`<div class="panel"><div class="pt">💬 なおの返信を選ぶ</div>${st.choice.map((c,i)=>`<button class="choice" data-ci="${i}">${esc(c.t)}</button>`).join("")}</div>`;
@@ -793,9 +999,9 @@ function advance(){if(busy)return;const sc=cur;if(!sc)return;const st=sc.steps[S
  /* typing effect */
  busy=true;const body=$("#chat-body");const stp=sc.steps[S.step];
  if(stp&&!stp.choice&&!stp.mission&&!stp.me&&!stp.sys&&!stp.day&&stp.f){const tp=document.createElement("div");tp.className="msg";tp.id="tp-row";tp.innerHTML=avHTML(stp.f,38)+`<div class="col"><div class="who">${M[stp.f].n}</div><span class="typing"><i></i><i></i><i></i></span></div>`;body.appendChild(tp);body.scrollTop=body.scrollHeight;}
- setTimeout(()=>{const tp=$("#tp-row");if(tp)tp.remove();S.step++;S.shown=Math.max(S.shown,S.step);save();busy=false;renderChat();
+ const dly=typingDelay(cur,stp);setTimeout(()=>{const tp=$("#tp-row");if(tp)tp.remove();S.step++;S.shown=Math.max(S.shown,S.step);save();busy=false;renderChat();
   if(S.step>=sc.steps.length){/* wait one more tap */}
- },stp&&stp.f?420:60);}
+ },dly);}
 $("#chat-next").addEventListener("click",advance);
 $("#chat-body").addEventListener("click",advance);
 function pickChoice(i){const sc=cur;const st=sc.steps[S.step];const c=st.choice[i];applyE(c.e);st._me=c.t;st._resp=c.r||[];S.step++;S.shown=Math.max(S.shown,S.step);save();renderChat();setTimeout(()=>{const b=$("#chat-body");b.scrollTop=b.scrollHeight;},50);}
@@ -803,11 +1009,12 @@ function toggleMiss(i){const st=cur.steps[S.step];st._sel=st._sel||[];const x=st
 function confirmMiss(){const st=cur.steps[S.step];let notes=[];st._sel.forEach(i=>{const o=st.mission.opts[i];applyE(o.e);notes.push(o.note);});st._sysResp=notes;S.step++;S.shown=Math.max(S.shown,S.step);save();renderChat();const b=$("#chat-body");b.scrollTop=b.scrollHeight;}
 function finishScene(){const sc=cur;if(sc.memo&&!S.memos.includes(sc.id)){S.memos.push(sc.id);}if(sc.ig)S.ig=Math.max(S.ig,sc.ig);if(sc.tt)S.tt=Math.max(S.tt,sc.tt);if(sc.photo)S.photosMax=Math.max(S.photosMax,sc.photo);S.scene++;S.step=0;S.shown=0;save();cur=null;
  if(S.scene>=SCENES.length){doEnding();return;}
+ const _nb=NOTIF_AFTER[sc.id];if(_nb)setTimeout(()=>pushNotif(_nb),750);
  toast("「"+SCENES[S.scene].title+"」が届いたよ");show("line");}
 /* ============ CALL ============ */
 let callTimer=null,callSec=0,callScene=null,callLine=0;
-function startCall(sc){callScene=sc;callLine=0;const who=sc.call.who;$("#call-av").src=M[who].av;$("#call-name").textContent=M[who].n;$("#call-status").textContent="着信中…";$("#call-sub").textContent="";$("#call-btns").style.display="flex";$("#call-grid").style.display="none";$("#call-end").style.display="none";show("call");}
-$("#call-acc").addEventListener("click",()=>{callSec=0;$("#call-status").textContent="00:00";$("#call-btns").style.display="none";$("#call-grid").style.display="grid";$("#call-end").style.display="block";$("#call-sub").textContent="タップで会話が進むよ";callTimer=setInterval(()=>{callSec++;$("#call-status").textContent=String(Math.floor(callSec/60)).padStart(2,"0")+":"+String(callSec%60).padStart(2,"0");},1000);});
+function startCall(sc){callScene=sc;callLine=0;const who=sc.call.who;$("#call-av").src=M[who].av;$("#call-name").textContent=M[who].n;$("#call-status").textContent="着信中…";$("#call-sub").textContent="";$("#call-btns").style.display="flex";const _cm=$("#call-mini");if(_cm)_cm.style.display="flex";$("#call-grid").style.display="none";$("#call-end").style.display="none";show("call");}
+$("#call-acc").addEventListener("click",()=>{callSec=0;$("#call-status").textContent="00:00";$("#call-btns").style.display="none";const _cm2=$("#call-mini");if(_cm2)_cm2.style.display="none";$("#call-grid").style.display="grid";$("#call-end").style.display="block";$("#call-sub").textContent="タップで会話が進むよ";callTimer=setInterval(()=>{callSec++;$("#call-status").textContent=String(Math.floor(callSec/60)).padStart(2,"0")+":"+String(callSec%60).padStart(2,"0");},1000);});
 $("#call-dec").addEventListener("click",()=>{toast("かけ直してきたよ（応答してね）");});
 $("#call-end").addEventListener("click",()=>{const lines=callScene.call.lines;if(callLine<lines.length){$("#call-sub").textContent="「"+lines[callLine]+"」";callLine++;return;}clearInterval(callTimer);S.callDone=true;save();openChat(callScene);});
 $("#call-hang").addEventListener("click",ev=>{ev.stopPropagation();});
@@ -821,23 +1028,25 @@ function renderIG(){const el=$("#ig-body");const posts=IG_POSTS.slice(0,S.ig);
  let h=`<div class="stories">${Object.keys(M).filter(k=>M[k].av).map(k=>`<button class="story" data-story="${k}"><span class="ring ${S.ig>0?"":"seen"}"><img src="${M[k].av}"></span>${M[k].n}</button>`).join("")}<button class="story" data-story="me"><span class="ring seen"><span style="width:100%;height:100%;border-radius:50%;background:#06c755;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;border:2.5px solid #fff">N</span></span>あなた</button></div>`;
  h+=`<div class="ig-prof"><div class="ig-top"><span class="ring"><img src="assets/group.jpg"></span><div class="ig-stats"><div><b>4</b><span>投稿</span></div><div><b>486万</b><span>フォロワー</span></div><div><b>12</b><span>フォロー中</span></div></div></div>
  <div class="ig-bio"><b>nctwish_official</b> ✔<br>NCT WISH 公式アカウント<br>2nd TOUR『INTO THE WISH : Face Our WISH』開催中💫<br><span class="lnk">nctwish.jp/tour2027</span></div>
- <div class="ig-btns"><button class="fol">フォロー中</button><button id="ig-msg">メッセージ</button><button style="flex:none;padding:7px 11px">👤＋</button></div></div>`;
+ <div class="ig-btns"><button class="fol" id="ig-fol">${S.following?"フォロー中":"フォローする"}</button><button id="ig-msg">メッセージ</button><button style="flex:none;padding:7px 11px">👤＋</button></div></div>`;
  if(S.viewIG==="grid"||!S.viewIG){h+=`<div class="ig-tabs"><button class="on">▦</button><button id="ig-t-feed">🎬</button><button>👤</button></div><div class="ig-grid">${posts.length?posts.map(p=>`<button data-post="${p.id}"><img src="${p.img}"><span class="pin">📌</span></button>`).join(""):`<div class="ig-lock">🔒 物語を進めると公式投稿が解放されるよ</div>`}</div>`;}
  else{h+=`<div class="ig-tabs"><button id="ig-t-grid">▦</button><button class="on">🎬</button><button>👤</button></div>`+posts.map(p=>postHTML(p)).join("");}
  el.innerHTML=h;
  const gf=$("#ig-t-feed");if(gf)gf.addEventListener("click",()=>{S.viewIG="feed";save();renderIG();});
  const gg=$("#ig-t-grid");if(gg)gg.addEventListener("click",()=>{S.viewIG="grid";save();renderIG();});
  const ms=$("#ig-msg");if(ms)ms.addEventListener("click",()=>show("line"));
+ const fb=$("#ig-fol");if(fb)fb.addEventListener("click",()=>{S.following=!S.following;save();toast(S.following?"nctwish_official をフォローしたよ":"フォローを外したよ（物語には影響しないよ）");renderIG();});
  el.querySelectorAll("[data-post]").forEach(b=>b.addEventListener("click",()=>{S.viewIG="feed";save();renderIG();setTimeout(()=>{const t=document.getElementById("igpost-"+b.dataset.post);if(t)t.scrollIntoView();},60);}));
- el.querySelectorAll("[data-story]").forEach(b=>b.addEventListener("click",()=>toast("ストーリーズは本編の進行に合わせて更新されるよ")));
+ el.querySelectorAll("[data-story]").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.story;if(k==="me"){toast("自分のストーリーはまだ投稿してないよ");return;}const i=STORIES.findIndex(x=>x.k===k);if(i>=0)openStory(i);}));
  bindPostActs(el);}
 function postHTML(p){const liked=S.likedIG[p.id];return `<div class="post" id="igpost-${p.id}"><div class="post-h"><span class="ring"><img src="assets/group.jpg"></span><span><b>${p.user}</b> ✔<div class="loc">${p.loc}</div></span><span class="dots">•••</span></div>
  <div class="post-img" data-dbl="${p.id}"><img src="${p.img}"><span class="big-heart" id="bh-${p.id}">🤍</span></div>
- <div class="post-act"><button class="hrt ${liked?"liked":""}" data-like="${p.id}">${liked?"❤️":"🤍"}</button><button>💬</button><button>✈️</button><button class="save">🔖</button></div>
- <div class="post-likes">いいね！${p.likes}件</div><div class="post-cap"><b>${p.user}</b>${esc(p.cap)}</div>
- ${p.cm.map(c=>`<div class="post-cmt"><b>${c[0]}</b> ${esc(c[1])}</div>`).join("")}
+ <div class="post-act"><button class="hrt ${liked?"liked":""}" data-like="${p.id}">${liked?"❤️":"🤍"}</button><button data-cmts="${p.id}">💬</button><button>✈️</button><button class="save">🔖</button></div>
+ <div class="post-likes">いいね！${fmtLikes(p.likes)}件</div><div class="post-cap"><b>${p.user}</b>${esc(p.cap)}</div>
+ ${p.cm.slice(0,2).map(c=>`<div class="post-cmt"><b>${c[0]}</b> ${esc(c[1])}</div>`).join("")}<button class="cmt-more" data-cmts="${p.id}">コメント${p.cm.length}件をすべて見る</button>
  <div class="post-time">${p.time}</div></div>`;}
 function bindPostActs(root){root.querySelectorAll("[data-like]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.like;S.likedIG[id]=!S.likedIG[id];save();renderIG();}));
+ root.querySelectorAll("[data-cmts]").forEach(b=>b.addEventListener("click",()=>openIGComments(+b.dataset.cmts)));
  root.querySelectorAll("[data-dbl]").forEach(d=>d.addEventListener("dblclick",()=>{const id=d.dataset.dbl;const bh=document.getElementById("bh-"+id);if(bh){bh.classList.remove("pop");void bh.offsetWidth;bh.classList.add("pop");}if(!S.likedIG[id]){S.likedIG[id]=true;save();setTimeout(renderIG,650);}}));}
 /* ============ TIKTOK ============ */
 function renderTT(){const el=$("#tt-feed");const posts=TT_POSTS.slice(0,S.tt);
@@ -846,7 +1055,7 @@ function renderTT(){const el=$("#tt-feed");const posts=TT_POSTS.slice(0,S.tt);
  <div class="tt-top"><span>フォロー中</span><span class="on">おすすめ</span><span class="srch">🔍</span></div>
  <div class="tt-play" id="ttp-${i}">▶</div>
  <div class="tt-rail"><span style="position:relative;display:flex;flex-direction:column;align-items:center"><img class="tav" src="assets/group.jpg"><span class="plus">＋</span></span>
- <button class="rb" data-ttlike="${i}"><span class="ric ${liked?"liked":""}">❤️</span>${p.likes}</button>
+ <button class="rb" data-ttlike="${i}"><span class="ric ${liked?"liked":""}">❤️</span>${fmtNum((p.likesN||0)+(liked?1:0))}</button>
  <button class="rb" data-ttc="${i}"><span class="ric">💬</span>${p.cmN}</button>
  <button class="rb"><span class="ric">↗️</span>${p.sh}</button>
  <span class="tt-disc"><img src="assets/group.jpg"></span></div>
@@ -854,15 +1063,15 @@ function renderTT(){const el=$("#tt-feed");const posts=TT_POSTS.slice(0,S.tt);
  <div class="tt-music"><span>♪</span><span class="marq"><span>${esc(p.music)}　・　${esc(p.music)}　・　</span></span></div></div>
  <div class="tt-prog"><i id="ttpg-${i}"></i></div></div>`;}).join("");
  el.querySelectorAll("[data-ttlike]").forEach(b=>b.addEventListener("click",()=>{const i=b.dataset.ttlike;S.likedTT[i]=!S.likedTT[i];save();renderTT();}));
- el.querySelectorAll("[data-ttc]").forEach(b=>b.addEventListener("click",()=>toast("コメントは各国語で大盛り上がり中（本編の進行とは連動しないよ）")));
+ el.querySelectorAll("[data-ttc]").forEach(b=>b.addEventListener("click",()=>openTTComments(+b.dataset.ttc)));
  el.querySelectorAll(".tt-item").forEach((it,i)=>{it.addEventListener("click",ev=>{if(ev.target.closest(".rb"))return;const pl=document.getElementById("ttp-"+i);pl.classList.add("show");setTimeout(()=>pl.classList.remove("show"),450);const pg=document.getElementById("ttpg-"+i);let w=parseFloat(pg.style.width||"0");w=w>=100?0:w+25;pg.style.transition="width .4s";pg.style.width=w+"%";});});}
 /* ============ CALENDAR ============ */
 function calMonth(y,m,events){const first=new Date(y,m-1,1).getDay(),days=new Date(y,m,0).getDate();let cells=["日","月","火","水","木","金","土"].map(d=>`<div class="dw">${d}</div>`).join("");for(let i=0;i<first;i++)cells+=`<div class="cd dim"></div>`;for(let d=1;d<=days;d++){const ev=events[d];cells+=`<div class="cd ${y===2027&&m===3&&d===7?"today":""}"><b>${d}</b>${ev?ev.map(e=>`<span class="ev ${e[1]}">${e[0]}</span>`).join(""):""}</div>`;}return `<div class="cal-grid">${cells}</div>`;}
 function renderCal(){$("#cal-wrap").innerHTML=`
  <div class="cal-m">2027年2月 <span>INTO THE WISH : Face Our WISH 日本公演</span></div>
- ${calMonth(2027,2,{24:[["帯同決定","ev-b"]],25:[["代々木リハ","ev-r"]],26:[["代々木DAY1","ev-p"]],27:[["代々木DAY2","ev-p"]],28:[["代々木DAY3","ev-p"]]})}
+ ${calMonth(2027,2,{24:[["帯同決定","ev-b"]],25:[["代々木リハ","ev-r"]],26:[["代々木①","ev-p"]],27:[["代々木②","ev-p"]],28:[["代々木③","ev-p"]]})}
  <div class="cal-m">2027年3月 <span>神戸→福岡→愛知へ</span></div>
- ${calMonth(2027,3,{4:[["神戸入り","ev-b"]],5:[["神戸DAY1","ev-p"]],6:[["神戸DAY2","ev-p"]],7:[["神戸DAY3","ev-p"]],13:[["福岡DAY1","ev-g"]],14:[["福岡DAY2","ev-g"]],21:[["愛知DAY1","ev-g"]],22:[["愛知DAY2","ev-g"]]})}
+ ${calMonth(2027,3,{4:[["神戸入り","ev-b"]],5:[["神戸①","ev-p"]],6:[["神戸②","ev-p"]],7:[["神戸③","ev-p"]],13:[["福岡①","ev-g"]],14:[["福岡②","ev-g"]],21:[["愛知①","ev-g"]],22:[["愛知②","ev-g"]]})}
  <div class="cal-legend">📌 史実メモ：ツアー開幕は2027年1月ソウル・高尺スカイドーム。2026年12月5日にはUSJ「Winter Special Live」にも出演した。</div>
  <div style="margin-top:8px">
  ${[[24,2,"帯同決定","マネージャー田村から正式連絡"],[26,2,"東京公演 DAY1〜3（2/26-28）","国立代々木競技場第一体育館・全日完売"],[4,3,"神戸入り","新幹線移動／神戸牛の夕食"],[5,3,"神戸公演 DAY1〜3（3/5-7）","GLION ARENA KOBE・全日完売"],[13,3,"福岡公演（3/13-14）","北九州メッセ ― 物語の続きの地"],[21,3,"愛知公演（3/21-22）","ポートメッセなごや"]].map(x=>`<div class="cal-item"><span class="dt"><b>${x[0]}</b><span>${x[1]}月</span></span><span><b>${x[2]}</b><br><span style="color:#888;font-size:12px">${x[3]}</span></span></div>`).join("")}
@@ -880,6 +1089,73 @@ function openFree(){show("free");const b=$("#free-body");if(!b.dataset.init){b.i
 function freeSend(){const inp=$("#free-input");const v=inp.value.trim();if(!v)return;inp.value="";const b=$("#free-body");b.innerHTML+=msgHTML({me:true,t:v});let r=null;for(const f of FREE){if(f.k.some(k=>v.includes(k))){r=f.r;break;}}if(!r)r=FREE_DEFAULT[S.freeCount%FREE_DEFAULT.length];S.freeCount++;save();const tp=document.createElement("div");tp.className="msg";tp.innerHTML=avHTML("sakuya",38)+`<div class="col"><div class="who">サクヤ</div><span class="typing"><i></i><i></i><i></i></span></div>`;b.appendChild(tp);b.scrollTop=b.scrollHeight;setTimeout(()=>{tp.remove();b.innerHTML+=msgHTML({f:"sakuya",t:r});b.scrollTop=b.scrollHeight;},650);}
 $("#free-send").addEventListener("click",freeSend);
 $("#free-input").addEventListener("keydown",e=>{if(e.key==="Enter")freeSend();});
+
+/* ============ v2.1 REALISM LIBRARY ============ */
+/* scene start times (minutes from midnight) — clocks only move forward inside a scene */
+const T0=[20*60+7, 20*60+42, 10*60+18, 16*60+52, 23*60+9, 12*60+37, 11*60+26, 20*60+48, 15*60+34];
+function stepInc(st){if(!st)return 1;if(st.choice)return 4;if(st.mission)return 6;if(st.sys||st.day)return 2;const L=((typeof st.me==="string"?st.me:st.t)||"").length;return 1+(L%3);}
+function clockMin(si,upto,extra){let m=T0[Math.min(si,T0.length-1)];const sc=SCENES[si];if(!sc)return m;const n=Math.min(upto,sc.steps.length);for(let i=0;i<n;i++)m+=stepInc(sc.steps[i]);return m+(extra||0)*2;}
+function fmtMin(m){m=((m%1440)+1440)%1440;return Math.floor(m/60)+":"+String(m%60).padStart(2,"0");}
+function msgTimeStr(si,idx,extra){return fmtMin(clockMin(si,idx,extra||0));}
+function nowTimeStr(){const d=new Date();return d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");}
+function typingDelay(sc,stp){if(!stp)return 60;if(stp.f){const L=(stp.t||"").length;let d=Math.min(2000,550+L*20);const h=Math.floor(clockMin(SCENES.indexOf(sc),S.step)/60);if(h>=22||h<5)d*=1.7;if(L>=70)d+=450;return Math.round(d);}if(stp.me)return 130;return 150;}
+function lastMsgText(sc){for(let i=sc.steps.length-1;i>=0;i--){const st=sc.steps[i];if(typeof st.me==="string")return st.me;if(st.t)return st.t;if(typeof st.sys==="string")return st.sys;}return sc.title;}
+/* notification banner interrupts */
+const NOTIF_AFTER={
+ s2:{go:"ig",ic:"📸",bg:"linear-gradient(45deg,#feda75,#d62976,#962fbf)",title:"Instagram",body:"nctwish_official が新しい投稿をシェアしました ―「日本公演、間もなく開幕」"},
+ s3:{go:"tt",ic:"♪",bg:"#111",title:"TikTok",body:"nctwish_official が新しい動画を投稿しました ― リハーサルの熱量、そのまま置いていきます💫"},
+ s5:{go:"line",ic:"💬",bg:"#06c755",title:"LINE ・ マネージャー田村",body:"神戸入りお疲れさまです。明日のリハは11時開始に変更です"},
+ s6:{go:"ig",ic:"📸",bg:"linear-gradient(45deg,#feda75,#d62976,#962fbf)",title:"Instagram",body:"nctwish_official が新しい投稿をシェアしました ―「KOBE FINAL DAY 💫」"}
+};
+let _nbGo="home",_nbTimer=null;
+function pushNotif(nb){$("#nb-ic").textContent=nb.ic;$("#nb-ic").style.background=nb.bg;$("#nb-title").textContent=nb.title;$("#nb-body").textContent=nb.body;_nbGo=nb.go;const b=$("#nbanner");b.classList.add("show");clearTimeout(_nbTimer);_nbTimer=setTimeout(()=>b.classList.remove("show"),4600);}
+$("#nbanner").addEventListener("click",()=>{$("#nbanner").classList.remove("show");show(_nbGo);});
+/* profiles */
+const PROF_STATUS={me:"ツアー帯同中⭐ 神戸まで全力サポート",mgr:"ツアー運営に全力。無線はいつも耳に",group:"INTO THE WISH : Face Our WISH ― 日本公演中💫 完売御礼",sion:"リーダーとして、最後まで丁寧に",yushi:"よろしくお願いします",riku:"神戸、楽しみ",jaehee:"日本語がんばります！関西弁も勉強中",ryo:"トントンと一緒",sakuya:"言葉は、届くところまで"};
+function openProfile(key){
+ let name,status,av="",sil=null,cover="assets/stage1.jpg";
+ if(key==="me"){name="なお（スタッフ）";status=PROF_STATUS.me;sil=["N","#06c755"];cover="assets/stage2.jpg";}
+ else if(key==="group"){name=THREADS.group.title;status=PROF_STATUS.group;av="assets/group.jpg";cover="assets/group.jpg";}
+ else if(THREADS[key]&&!M[key]){const th=THREADS[key];name=th.title;status=PROF_STATUS[key]||"";av=th.av;if(!av)sil=[th.ini,th.c];cover="assets/stage1.jpg";}
+ else{const m=M[key]||{n:key,av:"",c:"#999"};name=m.n;status=PROF_STATUS[key]||"";av=m.av;if(!av)sil=[m.n[0],m.c];cover=av||"assets/stage1.jpg";}
+ $("#prof-name").textContent=name;$("#prof-status").textContent=status;$("#prof-cover").src=cover;
+ const img=$("#prof-av"),sl=$("#prof-avsil");
+ if(av){img.src=av;img.style.display="block";sl.style.display="none";}
+ else{img.style.display="none";sl.style.display="flex";sl.textContent=sil?sil[0]:"?";sl.style.background=sil?sil[1]:"#999";}
+ show("profile");}
+$("#prof-talk").addEventListener("click",()=>show("line"));
+/* number formats */
+function fmtLikes(v){const n=parseInt(String(v).replace(/[^0-9]/g,""),10)||0;if(n>=10000){const w=n/10000;return (w>=100?String(Math.round(w)):(Math.round(w*10)/10).toString().replace(/\.0$/,""))+"万";}return n.toLocaleString();}
+function fmtNum(n){return (n||0).toLocaleString();}
+/* stories */
+const STORIES=[{k:"sion",img:"assets/stage2.jpg",h:"2時間前"},{k:"yushi",img:"assets/group.jpg",h:"3時間前"},{k:"riku",img:"assets/stage1.jpg",h:"5時間前"},{k:"jaehee",img:"assets/kobe.jpg",h:"6時間前"},{k:"ryo",img:"assets/av-ryo.jpeg",h:"8時間前"},{k:"sakuya",img:"assets/av-sakuya.jpeg",h:"9時間前"}];
+let storyIdx=0,storyTimer=null;
+function openStory(i){storyIdx=i;const st=STORIES[i];const m=M[st.k];$("#story-img").src=st.img;$("#story-av").src=m.av;$("#story-name").textContent="nctwish_"+st.k;$("#story-time").textContent=st.h;
+ $("#story-segs").innerHTML=STORIES.map((x,j)=>`<i class="${j<i?"done":""}"><b id="seg-${j}"></b></i>`).join("");
+ show("story");
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{const b=$("#seg-"+i);if(b){b.style.transition="width 5.2s linear";b.style.width="100%";}}));
+ clearTimeout(storyTimer);storyTimer=setTimeout(()=>storyNav(1),5300);}
+function closeStory(){clearTimeout(storyTimer);show("ig");}
+function storyNav(d){const n=storyIdx+d;if(n<0)return;if(n>=STORIES.length){closeStory();return;}openStory(n);}
+$("#story-x").addEventListener("click",ev=>{ev.stopPropagation();closeStory();});
+$("#story-next").addEventListener("click",()=>storyNav(1));
+$("#story-prev").addEventListener("click",()=>storyNav(-1));
+/* comment sheet (shared IG / TikTok) */
+let _sheetSend=null;
+function sheetRow(c){return `<div class="sc-row"><b>${esc(c[0])}</b><span>${esc(c[1])}</span></div>`;}
+function openSheet(title,items,onSend){$("#sheet-head").textContent=title;$("#sheet-body").innerHTML=items.map(sheetRow).join("");_sheetSend=onSend;$("#sheet").classList.add("on");$("#sheet-body").scrollTop=0;}
+function closeSheet(){$("#sheet").classList.remove("on");}
+$("#sheet").addEventListener("click",e=>{if(e.target.id==="sheet")closeSheet();});
+$("#sheet-x").addEventListener("click",closeSheet);
+$("#sheet-send").addEventListener("click",()=>{const inp=$("#sheet-input");const v=inp.value.trim();if(!v)return;inp.value="";if(_sheetSend)_sheetSend(v);});
+$("#sheet-input").addEventListener("keydown",e=>{if(e.key==="Enter")$("#sheet-send").click();});
+const CMT_EXTRA=[["wish_daily","現地で見てたけど本当にすごかった…"],["tour_staff_fan","スタッフさんたちもお疲れさまです"],["wish_archive","保存しました📌"]];
+function openIGComments(id){const post=IG_POSTS.find(x=>x.id===id);if(!post)return;const items=post.cm.concat(CMT_EXTRA);openSheet("コメント",items,v=>{post.cm.push(["nao_staff",v]);$("#sheet-body").innerHTML=post.cm.concat(CMT_EXTRA).map(sheetRow).join("");$("#sheet-body").scrollTop=1e6;});}
+const TT_CMTS=[[["wish_jp","かっこよすぎる😭"],["dance_cover_jp","振りコピしました！"],["sakuya_thoughts","言葉選びクイズ最高"]],[["kobe_wish","神戸から参戦します⚓"],["wish_archive","海とアリーナの組み合わせ最高"]],[["wish_daily","サクヤ回、再生が止まらない"],["hands_up_jp","Hands Up大好き"]]];
+function openTTComments(i){const items=(TT_CMTS[i]||[]).slice();openSheet("コメント",items,v=>{items.push(["nao_staff",v]);$("#sheet-body").innerHTML=items.map(sheetRow).join("");$("#sheet-body").scrollTop=1e6;});}
+/* tiktok pseudo-playback progress */
+let _ttTimer=null;
+function startTTProg(){clearInterval(_ttTimer);_ttTimer=setInterval(()=>{const v=$("#v-tt");if(!v.classList.contains("on")){clearInterval(_ttTimer);return;}const feed=$("#tt-feed");const items=feed.querySelectorAll(".tt-item");if(!items.length)return;let idx=0;items.forEach((it,i)=>{if(feed.scrollTop>=it.offsetTop-it.clientHeight*0.4)idx=i;});const pg=document.getElementById("ttpg-"+idx);if(pg){let w=parseFloat(pg.style.width||"0");w=w>=100?0:w+0.85;pg.style.transition="width .12s linear";pg.style.width=w+"%";}},120);}
 /* init */
 renderGauges();save();
 </script>
